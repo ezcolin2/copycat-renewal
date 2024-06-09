@@ -2,6 +2,7 @@ import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv'
+import userRouter from './routes/user.js';
 
 dotenv.config()
 const app = express()
@@ -15,6 +16,7 @@ app.get('/', (req, res)=>{
     res.sendFile(path.join(__dirname, '..', '/client/build/index.html'));
 
 })
+app.use('/api/v1/users', userRouter);
 app.get('*', (req, res)=>{
     res.sendFile(path.join(__dirname, '..', '/client/build/index.html'));
 
