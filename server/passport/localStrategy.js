@@ -5,11 +5,11 @@ import User from '../schemas/user.js';
 
 const initializeLocalStrategy = () => {
   passport.use('local', new LocalStrategy({
-    usernameField: 'name',
+    usernameField: 'nickname',
     passwordField: 'password'
-  }, async (name, password, done) => {
+  }, async (nickname, password, done) => {
     try {
-      const findUser = await User.findOne({ name });
+      const findUser = await User.findOne({ nickname });
       if (findUser) {
         const res = await bcrypt.compare(password, findUser.password);
         if (res) {

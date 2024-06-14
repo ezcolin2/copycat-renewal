@@ -18,6 +18,7 @@ export const joinUser = async (req, res) => {
         message: "유저 이름 중복",
       });
     }
+    console.log(error);
   }
   res.json({
     code: 200,
