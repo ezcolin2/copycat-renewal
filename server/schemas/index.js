@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 
-const connect = () => {
+export const connect = () => {
   mongoose.connect(`mongodb://${process.env.MONGODB_URL}/${process.env.MONGODB_NAME}`)
     .then(() => {
       console.log("mongodb 연결 성공");
@@ -18,4 +17,9 @@ const connect = () => {
   });
 };
 
-export default connect;
+export const disconnect = async ()=>{
+  return mongoose.disconnect().then(()=>{
+    console.log("mongoDB 연결을 끊었습니다.")
+  });
+}
+

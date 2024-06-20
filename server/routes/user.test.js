@@ -1,6 +1,7 @@
 import app from "../server.js";
 import request from "supertest";
 import mongoose from "mongoose";
+import { disconnect } from "../schemas/index.js";
 
 const initDB = async () => {
   const collections = mongoose.connection.collections;
@@ -44,6 +45,9 @@ describe("POST /users/login", () => {
   beforeEach(async () => {
     await initDB();
   });
+  afterAll(()=>{
+    disconnect();
+  })
   // 회원가입 먼저
   test("회원가입 성공", async () => {
     const response = await request(app).post("/api/v1/users/join").send({

@@ -1,12 +1,16 @@
 import {Server} from "socket.io";
 import passport from "passport";
 import Room from "./schemas/room.js";
-import { isAuthenticated } from "./middlewares/socketAuthMiddleware.js";
-// import { Server } from "http";
+import {
+  isAuthenticated,
+  isNotAuthenticated,
+} from "./middlewares/socketAuthMiddleware.js";
+import sessionMiddleware from './middlewares/sessionMiddleware.js';
 
-export default function socketHandler(server, sessionMiddleware) {
+// server를 받아서 socket과 연결
+export default (server) => {
   const io = new Server(server, {
-    path: "/socket.io", // 프론트에서 expree 서버의 해당 경로의 socket.io.js에 접근 가능
+    path: "/socket.io", // 프론트에서 express 서버의 해당 경로의 socket.io.js에 접근 가능
   });
   io.engine.use(sessionMiddleware);
   // passportConfig()
@@ -21,6 +25,7 @@ export default function socketHandler(server, sessionMiddleware) {
     socket.emit("init", rooms);
     socket.on("disconnect", () => {
       console.log(`${user.nickname}님께서 접속을 종료하셨습니다.`);
+      // socket.disconnect();
     });
     socket.on("error", (error) => {
       console.error(error);
@@ -29,20 +34,40 @@ export default function socketHandler(server, sessionMiddleware) {
       console.log(`${roomName} 방 생성 요청`);
       const newRoom = new Room({
         name: roomName,
-        master: user.userId,
+        master: user.nickname,
       });
       const createdRoom = await newRoom.save();
       io.emit("newRoom", createdRoom);
     });
     socket.on("deleteRoom", async (_id) => {
-      const { acknowledged, _ } = Room.deleteOne({ _id });
-      if (acknowledged) {
-        return res.json({
-          code: 200,
-          message: "삭제에 성공했습니다.",
+      console.log(`${_id} 방 삭제 요청`);
+      const findRoom = await Room.findOne({_id});
+      if (!findRoom) {
+        // 찾은 방이 없는 경우에 대한 처리
+        io.to(socket.id).emit("error", {
+          code: 404,
+          message: `방을 찾을 수 없습니다.`
         });
+        return; 
       }
-      res.status(500).json({
+      // 만약 방 주인이 아닌 사람이 삭제 요청 보내면 거절
+      if (user.nickname !== findRoom.master){
+        io.to(socket.id).emit("error", {
+          code: 403,
+          message: "방 삭제 권한이 없습니다."
+        });
+        return;
+      }
+      const { acknowledged } = await Room.deleteOne({ _id });
+      if (acknowledged) {
+        io.emit("deletedRoom", {
+          code: 200,
+          message: `${_id}번 방 삭제에 성공했습니다.`
+        });
+        return;
+      }
+      console.log(acknowledged);
+      io.to(socket.id).emit("error", {
         code: 500,
         message: "삭제에 실패했습니다.",
       });
@@ -56,12 +81,16 @@ export default function socketHandler(server, sessionMiddleware) {
     const user = socket.request.user;
     console.log(user);
     const roomId = socket.handshake.query.roomId;
+    console.log(socket.handshake.query)
+    console.log(`room id : ${roomId}`)
     socket.join(roomId);
+    console.log(roomNamespace.adapter.rooms)
+    console.log(`접속 인원 : ${roomNamespace.adapter.rooms.get(roomId).size}`);
     roomNamespace.to(roomId).emit("newMessage", {
       userName: "system",
       message: `${user.nickname}님께서 입장하셨습니다.`,
     });
-    socket.on("disconnect", () => {
+    socket.on("disconnect", async () => {
       roomNamespace
         .to(roomId)
         .emit("newMessage", {
@@ -69,6 +98,20 @@ export default function socketHandler(server, sessionMiddleware) {
           message: `${user.nickname}님께서 접속을 종료하셨습니다.`,
         });
       socket.leave(roomId);
+      const cnt = roomNamespace.adapter.rooms.get(roomId)?.size || 0
+      console.log(`접속 인원 : ${cnt}`);
+      // 방에 아무도 없다면 삭제
+      if (cnt==0){
+        const { acknowledged } = await Room.deleteOne({ _id : roomId });
+        if (acknowledged) {
+          io.emit("deletedRoom", {
+            code: 200,
+            message: `${roomId}번 방 삭제에 성공했습니다.`,
+            _id: roomId
+          });
+          return;
+        }
+      }
     });
     socket.on("error", (error) => {
       console.error(error);
@@ -80,4 +123,4 @@ export default function socketHandler(server, sessionMiddleware) {
       });
     });
   });
-}
+};
