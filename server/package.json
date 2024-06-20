@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon app.js",
     "client": "cd ../client && npm start",
     "dev": "concurrently \"cross-env NODE_ENV=dev npm run start\" \"npm run client\" ",
     "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles"

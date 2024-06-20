@@ -1,11 +1,12 @@
-import {useState} from 'react';
-import LogInAndJoinLayout from '../../layouts/LogInAndJoin';
-import {BigLogo} from './styles';
-function LogInAndJoin() {
-  return <>
-    <BigLogo src="copycat.png"></BigLogo>
-    <LogInAndJoinLayout></LogInAndJoinLayout>
-  </>
-}
+import LogInAndJoinLayout from "../../layouts/LogInAndJoin";
+import { BigLogo } from "./styles";
+const LogInAndJoin = () => {
+  return (
+    <div>
+      <BigLogo src="copycat.png"></BigLogo>
+      <LogInAndJoinLayout></LogInAndJoinLayout>
+    </div>
+  );
+};
 
 export default LogInAndJoin;

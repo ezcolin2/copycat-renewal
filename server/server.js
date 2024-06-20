@@ -1,7 +1,6 @@
 import express from 'express'
 import userRouter from './routes/user.js';
 import cors from 'cors';
-import session from 'express-session';
 import passportConfig from './passport/index.js';
 import passport from 'passport';
 import dotenv from './config/dotenv/index.js';
@@ -20,14 +19,17 @@ app.use(passport.initialize());
 app.use(passport.session())
 app.use(express.static('../client/build'));
 app.use(cors());
-app.get('/', (req, res)=>{
-    res.sendFile('../client/build/index.html');
+// app.get('/', (req, res)=>{
+//     res.sendFile('../client/build/index.html');
 
-})
+// })
 app.use('/api/v1/users', userRouter);
-app.get('*', (req, res)=>{
-    res.sendFile('../client/build/index.html');
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('에러가 발생하였습니다.');
+  });
+// app.get('*', (req, res)=>{
+//     res.sendFile('../client/build/index.html');
 
-})
-
+// })
 export default app;

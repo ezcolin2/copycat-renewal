@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { Page, Button, Form, Input, Message, GoToJoin } from "./styles";
+import axios from 'axios';
 const Join = ({goToLogin}) => {
   // setIsLogin : 외부에서 로그인 화면인지 회원가입 화면인지 구분하는 state를 바꿈
   const [nickname, setNickname] = useState("");
@@ -14,14 +15,23 @@ const Join = ({goToLogin}) => {
   const onChangePasswordCheck = useCallback((e)=>{
     setPasswordCheck(e.target.value);
   }, []);
+  const join = useCallback((e)=>{
+    e.preventDefault();
+    axios.post('http://localhost:3001/api/v1/users/join', {
+      nickname,
+      password
+    }).then((response)=>{
+      console.log(response);
+    })
+  }, [nickname, password]);
   return (
     <Page>
-      <Form>
+      <Form onSubmit = {join}>
         <Input value = {nickname} onChange = {onChangeNickname} type="text" placeholder="닉네임을 입력하세요" />
         <Input value = {password} onChange = {onChangePassword} type="password" placeholder="비밀번호를 입력하세요" />
         <Input value = {passwordCheck} onChange = {onChangePasswordCheck} type="password" placeholder="비밀번호를 한 번 더 입력하세요" />
 
-        <Button>로그인</Button>
+        <Button>회원가입</Button>
         <Message>이미 계정이 있나요? <GoToJoin onClick = {goToLogin}>로그인 하러가기</GoToJoin></Message>
       </Form>
     </Page>
