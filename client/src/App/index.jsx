@@ -1,6 +1,6 @@
 import { Body } from "./styles.jsx";
-import LogInAndJoin from "../pages/LogInAndJoin";
 import { ToastContainer } from "react-toastify";
+import Router from './Router';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
         // limit={1} // 알람 개수 제한
       />
       <Body>
-        <LogInAndJoin></LogInAndJoin>
+        <Router />
       </Body>
     </>
   );

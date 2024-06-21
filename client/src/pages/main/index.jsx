@@ -1,4 +1,4 @@
-import Header from '../../layouts/header';
+import Header from '../../layouts/Header';
 const main = ()=>{
     return (
     <div>

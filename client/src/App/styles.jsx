@@ -5,5 +5,5 @@ export const Body = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgb(237, 193, 128);
+  background-color: #F0EBC8;
 `;
