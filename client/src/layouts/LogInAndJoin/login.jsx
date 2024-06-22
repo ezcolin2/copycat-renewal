@@ -1,10 +1,12 @@
 import React, { useCallback, useState } from "react";
 import { Page, Button, Form, Input, Message, GoToJoin } from "./styles";
 import axios from "axios";
-import {toast} from 'react-toastify';
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useLoading } from "../../contexts/LoadingContext";
+
 const LogIn = ({ goToJoin }) => {
-  // setIsLogin : 외부에서 로그인 화면인지 회원가입 화면인지 구분하는 state를 바꿈
+  const { startLoading, stopLoading } = useLoading();
   const navigate = useNavigate();
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
@@ -17,6 +19,7 @@ const LogIn = ({ goToJoin }) => {
   const login = useCallback(
     (e) => {
       e.preventDefault();
+      startLoading();
       axios
         .post("http://localhost:3001/api/v1/users/login", {
           nickname,
@@ -24,10 +27,13 @@ const LogIn = ({ goToJoin }) => {
         })
         .then((response) => {
           console.log(response);
-          navigate('/rooms');
+          navigate("/rooms");
         })
         .catch((error) => {
           toast.error(error.response.data.message);
+        })
+        .finally(() => {
+          stopLoading();
         });
     },
     [nickname, password]

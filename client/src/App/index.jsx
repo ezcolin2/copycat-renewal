@@ -1,11 +1,13 @@
 import { Body } from "./styles.jsx";
 import { ToastContainer } from "react-toastify";
-import Router from './Router';
-import 'react-toastify/dist/ReactToastify.css';
+import Router from "./Router";
+import "react-toastify/dist/ReactToastify.css";
+import { LoadingProvider } from "../contexts/LoadingContext/index.jsx";
+import { Spinner } from "../components/Spinner/index.jsx";
 
 function App() {
   return (
-    <>
+    <LoadingProvider>
       <ToastContainer
         position="bottom-right" // 알람 위치 지정
         autoClose={3000} // 자동 off 시간
@@ -19,9 +21,10 @@ function App() {
         // limit={1} // 알람 개수 제한
       />
       <Body>
+        <Spinner />
         <Router />
       </Body>
-    </>
+    </LoadingProvider>
   );
 }
 

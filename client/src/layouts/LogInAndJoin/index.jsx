@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import LogIn from './login';
 import Join from './join';
+
 function LogInAndJoin() {
   const [isLogin, setIsLogin] = useState(false);
   const goToLogin = ()=>{setIsLogin(true)}
