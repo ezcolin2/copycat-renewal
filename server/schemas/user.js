@@ -11,6 +11,18 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  matches: {
+    type: Number,
+    default: 0
+  },
+  win: {
+    type: Number,
+    default: 0
+  },
+  lose: {
+    type: Number,
+    default: 0
   }
 });
 

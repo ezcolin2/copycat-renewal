@@ -12,7 +12,7 @@ const initDB = async () => {
   }
 };
 
-describe("POST /users/join", () => {
+describe("POST /api/v1/users/join", () => {
   beforeEach(async () => {
     await initDB();
   });
@@ -41,13 +41,13 @@ describe("POST /users/join", () => {
   });
 });
 
-describe("POST /users/login", () => {
+describe("POST /api/v1/users/login", () => {
   beforeEach(async () => {
     await initDB();
   });
-  afterAll(()=>{
+  afterAll(() => {
     disconnect();
-  })
+  });
   // 회원가입 먼저
   test("회원가입 성공", async () => {
     const response = await request(app).post("/api/v1/users/join").send({
@@ -126,5 +126,58 @@ describe("POST /users/login", () => {
       code: 404,
       message: "해당 유저가 존재하지 않습니다.",
     });
+  });
+});
+
+describe("GET /api/v1/users/myself", () => {
+  beforeEach(async () => {
+    await initDB();
+  });
+  afterAll(() => {
+    disconnect();
+  });
+
+  test("내 정보 가져오기 테스트", async () => {
+    const agent = request.agent(app);
+    const joinResponse = await agent
+      .post("/api/v1/users/join")
+      .send({ nickname: "chulsoo", password: "password" })
+      .expect(200);
+
+    expect(joinResponse.body).toEqual({
+      code: 200,
+      message: "회원가입 성공",
+    });
+    
+    const loginResponse = await agent
+      .post("/api/v1/users/login")
+      .send({ nickname: "chulsoo", password: "password" })
+      .expect(200);
+
+    expect(loginResponse.body).toEqual({
+      code: 200,
+      message: "로그인 성공",
+    });
+    
+    const myInfo = await agent.get("/api/v1/users/myself");
+    expect(myInfo.body).toEqual({
+      nickname: "chulsoo",
+      matches: 0,
+      win: 0,
+      lose: 0,
+    });
+
+    const logoutResponse = await agent.get('/api/v1/users/logout');
+    expect(logoutResponse.body).toEqual({
+      code: 200,
+      message: "로그아웃에 성공했습니다.",
+    })
+
+    const myFailInfo = await agent.get("/api/v1/users/myself");
+    expect(myFailInfo.body).toEqual({
+      code: 401,
+      message: "로그인이 필요합니다.",
+    });
+    
   });
 });

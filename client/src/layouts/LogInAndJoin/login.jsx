@@ -2,8 +2,10 @@ import React, { useCallback, useState } from "react";
 import { Page, Button, Form, Input, Message, GoToJoin } from "./styles";
 import axios from "axios";
 import {toast} from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 const LogIn = ({ goToJoin }) => {
   // setIsLogin : 외부에서 로그인 화면인지 회원가입 화면인지 구분하는 state를 바꿈
+  const navigate = useNavigate();
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const onChangeNickname = useCallback((e) => {
@@ -22,6 +24,7 @@ const LogIn = ({ goToJoin }) => {
         })
         .then((response) => {
           console.log(response);
+          navigate('/rooms');
         })
         .catch((error) => {
           toast.error(error.response.data.message);

@@ -20,7 +20,7 @@ export const joinUser = async (req, res) => {
     }
     console.log(error);
   }
-  res.json({
+  res.status(200).json({
     code: 200,
     message: "회원가입 성공",
   });
@@ -45,10 +45,21 @@ export const loginUser = async (req, res, next) => {
   })(req, res, next);
 };
 
+export const getMyInfo = (req, res)=>{
+  const user = req.user;
+  res.status(200).json({
+    nickname: user.nickname,
+    matches: user.matches,
+    win: user.win,
+    lose: user.lose
+  });
+}
+
 export const logoutUser = (req, res) => {
   req.session.destroy();
-  res.json({
+  res.status(200).json({
     code: 200,
     message: "로그아웃에 성공했습니다.",
   });
 };
+
