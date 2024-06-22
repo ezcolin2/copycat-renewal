@@ -4,6 +4,8 @@ import Router from "./Router";
 import "react-toastify/dist/ReactToastify.css";
 import { LoadingProvider } from "../contexts/LoadingContext/index.jsx";
 import { Spinner } from "../components/Spinner/index.jsx";
+import axios from 'axios';
+axios.defaults.withCredentials=true;
 
 function App() {
   return (

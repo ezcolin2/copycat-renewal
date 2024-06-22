@@ -20,6 +20,7 @@
     "react-spinners": "^0.13.8",
     "react-toastify": "^10.0.5",
     "styled-components": "^6.1.11",
+    "swr": "^2.2.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

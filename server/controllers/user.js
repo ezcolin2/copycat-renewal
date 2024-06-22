@@ -17,8 +17,16 @@ export const joinUser = async (req, res) => {
         code: 409,
         message: "유저 이름 중복",
       });
+    } else if (error.name == "ValidationError"){
+      console.log(error.message);
+      return res.status(409).json({
+        code: 400,
+        message: error.message,
+      });
+
     }
-    console.log(error);
+    console.log(error.name);
+    console.log(error.code);
   }
   res.status(200).json({
     code: 200,

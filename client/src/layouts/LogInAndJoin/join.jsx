@@ -24,19 +24,23 @@ const Join = ({ goToLogin }) => {
       e.preventDefault();
       startLoading();
       axios
-        .post("http://localhost:3001/api/v1/users/join", {
-          nickname,
-          password,
-        })
+        .post(
+          "http://localhost:3001/api/v1/users/join",
+          {
+            nickname,
+            password,
+          },
+        )
         .then((response) => {
           startLoading();
           toast.success(response.data.message);
         })
         .catch((error) => {
           toast.error(error.response.data.message);
-        }).finally(()=>{
-          stopLoading();
         })
+        .finally(() => {
+          stopLoading();
+        });
     },
     [nickname, password]
   );

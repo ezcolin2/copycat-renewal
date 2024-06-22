@@ -3,7 +3,7 @@ import LogIn from './login';
 import Join from './join';
 
 function LogInAndJoin() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const goToLogin = ()=>{setIsLogin(true)}
   const goToJoin = ()=>{setIsLogin(false)};
   return <>

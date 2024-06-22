@@ -4,7 +4,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useLoading } from "../../contexts/LoadingContext";
-
 const LogIn = ({ goToJoin }) => {
   const { startLoading, stopLoading } = useLoading();
   const navigate = useNavigate();

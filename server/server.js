@@ -12,13 +12,16 @@ const app = express()
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
 
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true 
+}));
 app.use(express.json());
 app.use(sessionMiddleware);
 passportConfig();
 app.use(passport.initialize());
 app.use(passport.session())
 app.use(express.static('../client/build'));
-app.use(cors());
 // app.get('/', (req, res)=>{
 //     res.sendFile('../client/build/index.html');
 
