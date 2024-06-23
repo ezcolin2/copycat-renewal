@@ -5,6 +5,7 @@ const MainSocketContext = createContext();
 export const useMainSocket = () => useContext(MainSocketContext);
 
 export const MainSocketProvider = ({children})=>{
+  const [rooms, setRooms] = useState([]);
     const [socket, setSocket] = useState(null);
     useEffect(() => {
         const socket = io(`http://localhost:3001`, {
@@ -13,7 +14,8 @@ export const MainSocketProvider = ({children})=>{
     
           });
         socket.on("init", (data) => {
-          console.log(data);
+          setRooms(data);
+          console.log(rooms);
           socket.off("init");
         });
         socket.on("newMessage", (data) => {
@@ -23,9 +25,11 @@ export const MainSocketProvider = ({children})=>{
           console.log(JSON.parse(err.message));
         });
         socket.on("newRoom", (newRoom) => {
+          setRooms((prev) => [...prev, newRoom])
           console.log(newRoom);
         });
         socket.on("deletedRoom", (deletedRoom) => {
+          setRooms((prev) => prev.filter((room)=>room._id!=deletedRoom._id))
           console.log(deletedRoom);
         });
         setSocket(socket);
@@ -34,7 +38,7 @@ export const MainSocketProvider = ({children})=>{
         }
       }, []);
     return (
-        <MainSocketContext.Provider value = {socket}>
+        <MainSocketContext.Provider value = {{socket, rooms}}>
             {children}
         </MainSocketContext.Provider>
     )

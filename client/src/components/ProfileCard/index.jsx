@@ -7,7 +7,7 @@ import { Spinner } from "../Spinner";
 export default () => {
   const { myInfo, isError, isLoading } = useUser();
   return (
-    <ProfileCard sx={{ width: "100%", height: "100%" }}>
+    <ProfileCard style = {{height: '600px'}}>
       {isLoading && <Spinner />}
       <Avatar sx={{ width: 150, height: 150 }} />
       <div>
