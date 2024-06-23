@@ -2,7 +2,7 @@ import { Body } from "./styles.jsx";
 import { ToastContainer } from "react-toastify";
 import Router from "./Router";
 import "react-toastify/dist/ReactToastify.css";
-import { LoadingProvider } from "../contexts/LoadingContext/index.jsx";
+import { LoadingProvider } from "../contexts/LoadingContext.jsx";
 import { Spinner } from "../components/Spinner/index.jsx";
 import axios from 'axios';
 axios.defaults.withCredentials=true;

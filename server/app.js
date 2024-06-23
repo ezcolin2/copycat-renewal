@@ -1,4 +1,6 @@
 import app from './server.js';
-app.listen(process.env.SERVER_PORT, ()=>{
+import webSocket from './socket.js';
+const server = app.listen(process.env.SERVER_PORT, ()=>{
     console.log(`${process.env.SERVER_PORT} 포트 서버 연결`);
 })
+webSocket(server);
