@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import {Video} from './styles';
 
 const OpenViduVideoComponent = ({ streamManager }) => {
     const videoRef = useRef(null);
@@ -9,7 +10,7 @@ const OpenViduVideoComponent = ({ streamManager }) => {
         }
     }, [streamManager]);
 
-    return <video autoPlay={true} ref={videoRef} />;
+    return <Video autoPlay={true} ref={videoRef} />;
 };
 
 export default OpenViduVideoComponent;
