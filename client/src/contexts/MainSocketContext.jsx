@@ -8,7 +8,7 @@ export const MainSocketProvider = ({children})=>{
   const [rooms, setRooms] = useState([]);
     const [socket, setSocket] = useState(null);
     useEffect(() => {
-        const socket = io(`http://localhost:3001`, {
+        const socket = io(`${process.env.REACT_APP_SERVER_URL}`, {
             path: "/socket.io",
             transports: ["websocket"],
     

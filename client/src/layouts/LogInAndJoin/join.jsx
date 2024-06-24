@@ -25,7 +25,7 @@ const Join = ({ goToLogin }) => {
       startLoading();
       axios
         .post(
-          "http://localhost:3001/api/v1/users/join",
+          `${process.env.REACT_APP_SERVER_URL}/api/v1/users/join`,
           {
             nickname,
             password,

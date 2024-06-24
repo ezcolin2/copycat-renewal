@@ -1,5 +1,6 @@
 import express from 'express'
 import userRouter from './routes/user.js';
+import openviduRouter from './routes/openvidu.js';
 import cors from 'cors';
 import passportConfig from './passport/index.js';
 import passport from 'passport';
@@ -27,6 +28,7 @@ app.use(express.static('../client/build'));
 
 // })
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/openvidu/connections', openviduRouter);
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('에러가 발생하였습니다.');
