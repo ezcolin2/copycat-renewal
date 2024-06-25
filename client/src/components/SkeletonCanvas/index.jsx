@@ -86,7 +86,7 @@ const App = () => {
 
   return (
     <div>
-      <canvas ref={canvasRef} style={{ position: 'relative' }} />
+      <canvas ref={canvasRef} style={{ position: 'absolute', top: '5px', left: '5px' }} />
       <button id="draw" onClick={handleButtonClick}>Draw</button>
     </div>
   );

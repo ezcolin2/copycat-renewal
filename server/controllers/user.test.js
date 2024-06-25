@@ -1,6 +1,5 @@
 jest.mock("../schemas/user.js");
 import User from "../schemas/user.js";
-import bcrypt from "bcrypt";
 jest.mock("passport");
 import passport from "passport";
 import { joinUser, loginUser, logoutUser, getMyInfo } from "./user.js";
