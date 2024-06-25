@@ -1,4 +1,4 @@
-import WebCam from "../../layouts/WebCam";
+import WebCam from "../../layouts/Game";
 
 const Room = () => {
   return (

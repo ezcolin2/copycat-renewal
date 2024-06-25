@@ -2,15 +2,18 @@ import { OpenVidu } from "openvidu-browser";
 import axios from "axios";
 import React, { useState, useEffect, useCallback } from "react";
 import UserVideoComponent from "../../components/openvidu";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import useUser from "../../hooks/useUser";
+// import SkeletonCanvas from "../../components/SkeletonCanvas";
 
 const APPLICATION_SERVER_URL =
   process.env.NODE_ENV === "production" ? "" : "http://localhost:3001/";
 
 const WebCam = () => {
-  const [mySessionId, setMySessionId] = useState("SessionA");
-  const [myUserName, setMyUserName] = useState(
-    "Participant" + Math.floor(Math.random() * 100)
-  );
+  const {myInfo, isError, isLoading} = useUser();
+  const { roomId } = useParams();
+  const navigate = useNavigate();
   const [session, setSession] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
@@ -53,7 +56,7 @@ const WebCam = () => {
     getToken().then((token) => {
       console.log(`토큰 연결 : ${token}`);
       mySession
-        .connect(token, { clientData: myUserName })
+        .connect(token, { clientData: myInfo.nickname })
         .then(async () => {
           // --- 5) Get your own camera stream ---
           const publisher = await OVInstance.initPublisherAsync(undefined, {
@@ -98,22 +101,17 @@ const WebCam = () => {
   };
 
   const leaveSession = useCallback(() => {
+    // 세션 나간 후 rooms 페이지로 이동
     if (session) {
       session.disconnect();
+      navigate("/rooms");
     }
 
-    // Empty all properties...
-    setOV(null);
-    setSession(undefined);
-    setSubscribers([]);
-    setMySessionId("SessionA");
-    setMyUserName("Participant" + Math.floor(Math.random() * 100));
-    setMainStreamManager(undefined);
-    setPublisher(undefined);
+
   }, [session]);
 
   const getToken = async () => {
-    const sessionId = await createSession(mySessionId);
+    const sessionId = await createSession(roomId);
     return await createToken(sessionId);
   };
 
@@ -155,19 +153,19 @@ const WebCam = () => {
   return (
     <div className="container">
       {session === undefined ? (
-            <input
-              className="btn btn-large btn-success"
-              type="button"
-              id="buttonjoinSession"
-              onClick={joinSession}
-              value="join session"
-            />
+        <input
+          className="btn btn-large btn-success"
+          type="button"
+          id="buttonjoinSession"
+          onClick={joinSession}
+          value="join session"
+        />
       ) : null}
 
       {session !== undefined ? (
         <div id="session">
           <div id="session-header">
-            <h1 id="session-title">{mySessionId}</h1>
+            <h1 id="session-title">{roomId}</h1>
             <input
               className="btn btn-large btn-danger"
               type="button"
