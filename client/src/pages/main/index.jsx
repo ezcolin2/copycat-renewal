@@ -1,21 +1,20 @@
-import Header from "../../layouts/Header";
 import ProfileCard from "../../components/ProfileCard";
 import { Grid } from "@mui/material";
 import RoomList from "../../components/RoomList";
 import { MainSocketProvider } from "../../contexts/MainSocketContext";
-
+import MainHeader from "../../components/MainHeader";
 const Main = () => {
   return (
     <MainSocketProvider>
       <Grid
       display="flex" flexDirection="column">
-        <Header />
+        <MainHeader />
         <Grid container spacing={2} p= {2}>
           <Grid item xs={4}>
-            <ProfileCard />
+            {<ProfileCard />}
           </Grid>
           <Grid item xs={8}>
-            <RoomList />
+            {<RoomList />}
           </Grid>
         </Grid>
       </Grid>

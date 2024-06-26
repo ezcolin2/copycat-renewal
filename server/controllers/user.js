@@ -64,6 +64,13 @@ export const getMyInfo = (req, res)=>{
 }
 
 export const logoutUser = (req, res) => {
+  if (!req.user){
+    res.status(401).json({
+      code: 401,
+      message: "접근 권한이 없습니다.",
+    });
+    return;
+  }
   req.session.destroy();
   res.status(200).json({
     code: 200,

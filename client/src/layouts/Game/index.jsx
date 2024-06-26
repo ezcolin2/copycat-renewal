@@ -10,11 +10,10 @@ import useUser from "../../hooks/useUser";
 const APPLICATION_SERVER_URL =
   process.env.NODE_ENV === "production" ? "" : "http://localhost:3001/";
 
-const WebCam = () => {
+const WebCam = ({session, setSession}) => {
   const {myInfo, isError, isLoading} = useUser();
   const { roomId } = useParams();
   const navigate = useNavigate();
-  const [session, setSession] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);

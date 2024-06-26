@@ -9,18 +9,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { LogoImg } from './styles';
 import useUser from '../../hooks/useUser';
 
-const Header = () => {
-  const {myInfo, isError, isLoading} = useUser();
-  console.log(myInfo)
+const Header = ({title, btnText, onClickBtn}) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="">
         <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
           <LogoImg src = {`${process.env.PUBLIC_URL}/copycat.png`}/>
           <Typography>
-            {!isLoading && myInfo.nickname}님 안녕하세요! 
+            {title} 
           </Typography>
-          <Button color="inherit">Logout</Button>
+          <Button color="inherit" onClick = {onClickBtn}>{btnText}</Button>
         </Toolbar>
       </AppBar>
     </Box>
