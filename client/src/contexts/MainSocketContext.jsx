@@ -4,19 +4,23 @@ import io from "socket.io-client";
 // 전역 socket context 생성
 const MainSocketContext = createContext();
 
-// 외부에서 context 내부 값에 접근하기 위한 함수
 export const useMainSocket = () => useContext(MainSocketContext);
 
 /**
+ * @typedef {Object} MainSocketProviderProps
+ * @property {React.ReactNode} children 자식 컴포넌트
+ */
+
+/**
  *
- * @param {React.ReactNode} children 자식 컴포넌트
+ * @param {MainSocketProviderProps} props
  * @returns {JSX.Element} children을 Provider로 묶어서 하위 컴포넌트에서 소켓을 사용할 수 있다.
  * 채팅방 목록을 볼 수 있는 메인 페이지에서 소켓 연결을 맺은 후
  * 소켓 객체를 하위 컴포넌트에서 사용할 수 있게 한다.
  */
 export const MainSocketProvider = ({ children }) => {
   const [rooms, setRooms] = useState([]); // 현재 존재하는 모든 방 정보
-  const [socket, setSocket] = useState(null); // 하위 컴포넌트에게 전달해 줄 소켓 객체
+  const [mainSocket, setMainSocket] = useState(null); // 하위 컴포넌트에게 전달해 줄 소켓 객체
   useEffect(() => {
     // 소켓 연결
     const socket = io(`${process.env.REACT_APP_SERVER_URL}`, {
@@ -53,7 +57,7 @@ export const MainSocketProvider = ({ children }) => {
     });
 
     // 소켓 연결을 맺고 이벤트를 모두 설정한 후에는 socket에 저장한다.
-    setSocket(socket);
+    setMainSocket(socket);
 
     // 컴포넌트가 언마운트 될 때 소켓 연결을 끊는다.
     return () => {
@@ -61,7 +65,7 @@ export const MainSocketProvider = ({ children }) => {
     };
   }, []);
   return (
-    <MainSocketContext.Provider value={{ socket, rooms }}>
+    <MainSocketContext.Provider value={{ mainSocket, rooms }}>
       {children}
     </MainSocketContext.Provider>
   );

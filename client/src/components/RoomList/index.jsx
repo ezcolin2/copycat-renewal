@@ -13,31 +13,31 @@ import { useState, useCallback } from "react";
 import { useMainSocket } from "../../contexts/MainSocketContext";
 import { useNavigate } from "react-router-dom";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
+/**
+ * 
+ * @returns {JSX.Element} 현재 생성되어 있는 방 목록을 보여준다.
+ */
 export default function RoomList() {
-  const { socket, rooms } = useMainSocket();
-  const [roomName, setRoomName] = useState("");
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // 페이지 이동을 위한 함수
+  const { socket, rooms } = useMainSocket(); // 전역적으로 관리 중인 소켓
+  const [roomName, setRoomName] = useState(""); // 방 이름
+
+  // 방 이름을 입력하는 함수.
   const changeRoomName = useCallback((e) => {
     setRoomName(e.target.value);
   });
+
+  // 방을 생성하는 함수.
   const createRoom = useCallback(() => {
     socket.emit("createRoom", roomName);
   });
+
+  // 방에 접속하는 함수.
   const enterRoom = useCallback((e)=>{
     navigate(`/rooms/${e.target.id}`);
   })
+
+  // 방 목록을 보여준다.
   return (<div style = {{height: '600px', overflow: 'auto'}}>
 
     <TableContainer component={Paper}>

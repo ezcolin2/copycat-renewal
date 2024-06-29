@@ -3,7 +3,6 @@ import {
   useContext,
   useState,
   useEffect,
-  Component,
 } from "react";
 import io from "socket.io-client";
 
@@ -12,15 +11,19 @@ const RoomSocketContext = createContext();
 
 // 외부에서 context 내부 값에 접근하기 위한 함수
 export const useRoomSocket = () => useContext(RoomSocketContext);
-
+/**
+ * /**
+ * @typedef {Object} RoomSocketProviderProps
+ * @property {React.ReactNode} children 자식 컴포넌트
+ * @property {number} roomId 방 아이디
+ */
 /**
  *
- * @param {React.ReactNode} children 자식 컴포넌트
- * @param {number} roomId 방 아이디
+ * @param {RoomSocketProviderProps} props
  * @returns {JSX.Element} children을 Provider로 묶어서 하위 컴포넌트에서 소켓을 사용할 수 있다.
  */
 export const RoomSocketProvider = ({ children, roomId }) => {
-  const [socket, setSocket] = useState(null);
+  const [roomSocket, setRoomSocket] = useState(null);
   // room namespace에 처음 렌더링 될 때 한 번만 접속한다.
   useEffect(() => {
     // room namespace에 연결
@@ -43,7 +46,7 @@ export const RoomSocketProvider = ({ children, roomId }) => {
     });
 
     // socket 세팅
-    setSocket(socket);
+    setRoomSocket(socket);
 
     // 컴포넌트가 언마운트 될 때 소켓 연결을 끊는다.
     return () => {
@@ -53,7 +56,7 @@ export const RoomSocketProvider = ({ children, roomId }) => {
 
   // socket을 하위 컴포넌트가 사용할 수 있도록 한다.
   return (
-    <RoomSocketContext.Provider value={{ socket }}>
+    <RoomSocketContext.Provider value={{ roomSocket }}>
       {children}
     </RoomSocketContext.Provider>
   );

@@ -2,11 +2,11 @@ import WebCam from "../../layouts/Game";
 import Header from "../../layouts/Header";
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useMainSocket } from "../../contexts/MainSocketContext";
+import { useRoomSocket } from "../../contexts/RoomSocketContext";
 import axios from "axios";
 
 const RoomHeader = ({ session, setSession }) => {
-  const { socket, _ } = useMainSocket();
+  const { socket, _ } = useRoomSocket();
   const navigate = useNavigate();
   const { roomId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
