@@ -5,15 +5,17 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useMainSocket } from "../../contexts/MainSocketContext";
 import axios from "axios";
 
-const RoomHeader = ({session, setSession}) => {
+const RoomHeader = ({ session, setSession }) => {
   const { socket, _ } = useMainSocket();
   const navigate = useNavigate();
   const { roomId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [roomInfo, setRoomInfo] = useState(null);
   const onClickBtn = useCallback(() => {
-    session.disconnect();
-    setSession(undefined);
+    if (session) {
+      session.disconnect();
+      setSession(undefined);
+    }
     navigate("/rooms");
   });
   useEffect(() => {
