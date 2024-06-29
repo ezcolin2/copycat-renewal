@@ -12,14 +12,9 @@ const RoomSocketContext = createContext();
 // 외부에서 context 내부 값에 접근하기 위한 함수
 export const useRoomSocket = () => useContext(RoomSocketContext);
 /**
- * /**
- * @typedef {Object} RoomSocketProviderProps
- * @property {React.ReactNode} children 자식 컴포넌트
- * @property {number} roomId 방 아이디
- */
-/**
- *
- * @param {RoomSocketProviderProps} props
+ * @param {Object} props
+ * @param {React.ReactNode} props.children 자식 컴포넌트
+ * @param {number} props.roomId 방 아이디
  * @returns {JSX.Element} children을 Provider로 묶어서 하위 컴포넌트에서 소켓을 사용할 수 있다.
  */
 export const RoomSocketProvider = ({ children, roomId }) => {

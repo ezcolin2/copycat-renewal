@@ -8,7 +8,16 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { LogoImg } from './styles';
 import useUser from '../../hooks/useUser';
-
+/**
+ * @typedef {function():void} OnClickFunction
+ */
+/**
+ * @param {Object} props
+ * @param {string} props.title 헤더의 중앙 문자열.
+ * @param {string} props.btnText 우측 버튼 안 문자열.
+ * @param {OnClickFunction} props.onClickBtn 버튼 클릭 이벤트.
+ * @returns {JSX.Element}
+ */
 const Header = ({title, btnText, onClickBtn}) => {
   return (
     <Box sx={{ flexGrow: 1 }}>

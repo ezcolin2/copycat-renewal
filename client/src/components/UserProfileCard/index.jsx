@@ -4,7 +4,12 @@ import { FileInput, ImageChangeLabel, ProfileCard } from "./styles";
 import useUser from "../../hooks/useUser";
 import { Spinner } from "../Spinner";
 
-export default () => {
+/**
+ * 
+ * @returns {JSX.Element} 유저 정보를 보여주는 프로필 카드
+ */
+const UserProfileCard =  () => {
+  // 유저 정보를 가져오는 swr 커스텀 훅
   const { myInfo, isError, isLoading } = useUser();
   return (
     <ProfileCard style = {{height: '600px'}}>
@@ -29,3 +34,5 @@ export default () => {
     </ProfileCard>
   );
 };
+
+export default UserProfileCard;

@@ -7,12 +7,8 @@ const LoadingContext = createContext();
 // 외부에서 context 내부 값에 접근하기 위한 함수
 export const useLoading = () => useContext(LoadingContext);
 /**
- * @typedef {Object} LoadingProviderProps
- * @property {React.ReactNode} children 자식 컴포넌트
- */
-/**
- * 
- * @param {LoadingProviderProps} 
+ * @param {Object} props
+ * @param {React.ReactNode} props.children 자식 컴포넌트
  * @returns {JSX.Element} children을 Provider로 묶어서 하위 컴포넌트에서 로딩 여부를 알 수 있도록 한다
  * 로딩 여부를 전역적으로 관리한다.
  * Spinner component에서 이 loading 값을 사용하며 전역 적으로 로딩 바를 관리할 수 있다.

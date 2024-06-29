@@ -7,6 +7,7 @@ const App = () => {
   const posenetModelRef = useRef(null);
   const videoRef = useRef(null);
 
+  // 포즈 ai 모델 로드.
   useEffect(() => {
     videoRef.current = document.querySelector('#main-video video');
     const loadPosenet = async () => {
@@ -17,6 +18,7 @@ const App = () => {
     loadPosenet();
   }, []);
 
+  // 비디오 요소를 가져와서 그 위에 골격을 그리는 함수.
   const handleButtonClick = () => {
     const video =  document.querySelector('#main-video video');
     const canvas = canvasRef.current;
@@ -44,6 +46,7 @@ const App = () => {
     predict();
   };
 
+  // 포즈의 각 부분에 점을 찍는 함수.
   const drawKeypoints = (keypoints, minConfidence, ctx, scale = 1) => {
     for (let i = 0; i < keypoints.length; i++) {
       const keypoint = keypoints[i];
@@ -53,6 +56,7 @@ const App = () => {
     }
   };
 
+  // 점을 이어서 골격을 그리는 함수.
   const drawSkeleton = (keypoints, minConfidence, ctx, scale = 1) => {
     const adjacentKeyPoints = posenet.getAdjacentKeyPoints(keypoints, minConfidence);
     adjacentKeyPoints.forEach((keypoints) => {

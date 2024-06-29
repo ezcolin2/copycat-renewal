@@ -7,13 +7,8 @@ const MainSocketContext = createContext();
 export const useMainSocket = () => useContext(MainSocketContext);
 
 /**
- * @typedef {Object} MainSocketProviderProps
- * @property {React.ReactNode} children 자식 컴포넌트
- */
-
-/**
- *
- * @param {MainSocketProviderProps} props
+ * @param {Object} props
+ * @param {React.ReactNode} props.children 자식 컴포넌트
  * @returns {JSX.Element} children을 Provider로 묶어서 하위 컴포넌트에서 소켓을 사용할 수 있다.
  * 채팅방 목록을 볼 수 있는 메인 페이지에서 소켓 연결을 맺은 후
  * 소켓 객체를 하위 컴포넌트에서 사용할 수 있게 한다.

@@ -1,4 +1,4 @@
-import ProfileCard from "../../components/ProfileCard";
+import ProfileCard from "../../components/UserProfileCard";
 import { Grid } from "@mui/material";
 import RoomList from "../../components/RoomList";
 import { MainSocketProvider } from "../../contexts/MainSocketContext";
