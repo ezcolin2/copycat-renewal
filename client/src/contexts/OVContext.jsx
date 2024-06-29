@@ -1,17 +1,27 @@
+import React, { createContext, useState, useContext, useCallback } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
 import axios from "axios";
-import React, { useState, useEffect, useCallback } from "react";
-import UserVideoComponent from "../../components/openvidu";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import useUser from "../../hooks/useUser";
-// import SkeletonCanvas from "../../components/SkeletonCanvas";
+import useUser from "../hooks/useUser";
 
 const APPLICATION_SERVER_URL =
   process.env.NODE_ENV === "production" ? "" : "http://localhost:3001/";
+// 전역 OpenVidu context 생성
+const OVContext = createContext();
 
-const WebCam = ({session, setSession}) => {
-  const {myInfo, isError, isLoading} = useUser();
+// 외부에서 context 내부 값에 접근하기 위한 함수
+export const useOpenVidu = () => useContext(OVContext);
+
+/**
+ * @param {Object} props
+ * @param {React.ReactNode} props.children 자식 컴포넌트
+ * @returns {JSX.Element} children을 Provider로 묶어서 하위 컴포넌트에서 소켓을 사용할 수 있다.
+ * 채팅방 목록을 볼 수 있는 메인 페이지에서 소켓 연결을 맺은 후
+ * 소켓 객체를 하위 컴포넌트에서 사용할 수 있게 한다.
+ */
+export const OVContextProvider = ({ children }) => {
+  const [session, setSession] = useState(null);
+  const { myInfo, isError, isLoading } = useUser();
   const { roomId } = useParams();
   const navigate = useNavigate();
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
@@ -105,8 +115,6 @@ const WebCam = ({session, setSession}) => {
       session.disconnect();
       navigate("/rooms");
     }
-
-
   }, [session]);
 
   const getToken = async () => {
@@ -139,68 +147,17 @@ const WebCam = ({session, setSession}) => {
     return response.data.token; // The token
   };
 
-  useEffect(() => {
-    const onbeforeunload = (event) => {
-      leaveSession();
-    };
-    window.addEventListener("beforeunload", onbeforeunload);
-    return () => {
-      window.removeEventListener("beforeunload", onbeforeunload);
-    };
-  }, [leaveSession]);
-
   return (
-    <div className="container">
-      {session === undefined ? (
-        <input
-          className="btn btn-large btn-success"
-          type="button"
-          id="buttonjoinSession"
-          onClick={joinSession}
-          value="join session"
-        />
-      ) : null}
-
-      {session !== undefined ? (
-        <div id="session">
-          <div id="session-header">
-            <h1 id="session-title">{roomId}</h1>
-            <input
-              className="btn btn-large btn-danger"
-              type="button"
-              id="buttonLeaveSession"
-              onClick={leaveSession}
-              value="Leave session"
-            />
-          </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            {mainStreamManager !== undefined ? (
-              <div id="main-video" className="col-md-6">
-                <UserVideoComponent streamManager={mainStreamManager} />
-              </div>
-            ) : null}
-            <div id="video-container" className="col-md-6">
-              {/* {publisher !== undefined ? (
-                            <div className="stream-container col-md-6 col-xs-6" onClick={() => handleMainVideoStream(publisher)}>
-                                <UserVideoComponent streamManager={publisher} />
-                            </div>
-                        ) : null} */}
-              {subscribers.map((sub, i) => (
-                <div
-                  key={sub.id}
-                  className="stream-container col-md-6 col-xs-6"
-                  // onClick={() => handleMainVideoStream(sub)}
-                >
-                  <span>{sub.id}</span>
-                  <UserVideoComponent streamManager={sub} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      ) : null}
-    </div>
+    <OVContext.Provider
+      value={{
+        session,
+        joinSession,
+        leaveSession,
+        mainStreamManager,
+        subscribers,
+      }}
+    >
+      {children}
+    </OVContext.Provider>
   );
 };
-
-export default WebCam;

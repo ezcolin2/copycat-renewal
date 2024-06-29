@@ -1,18 +1,20 @@
-import WebCam from "../../layouts/Game";
+import WebCam from "../../layouts/WebCam";
 import RoomHeader from "../../components/RoomHeader";
 import { RoomSocketProvider } from "../../contexts/RoomSocketContext";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { OVContextProvider } from "../../contexts/OVContext";
 
-const Room = () => {
+const Game = () => {
   const { roomId } = useParams();
-  const [session, setSession] = useState(undefined);
   return (
     <RoomSocketProvider roomId={roomId}>
-      <RoomHeader session={session} setSession={setSession} />
-      <WebCam session={session} setSession={setSession} />
+      <OVContextProvider>
+        <RoomHeader />
+        <WebCam />
+      </OVContextProvider>
     </RoomSocketProvider>
   );
 };
 
-export default Room;
+export default Game;

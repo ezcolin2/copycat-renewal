@@ -4,6 +4,7 @@ import io from "socket.io-client";
 // 전역 socket context 생성
 const MainSocketContext = createContext();
 
+// 외부에서 context 내부 값에 접근하기 위한 함수
 export const useMainSocket = () => useContext(MainSocketContext);
 
 /**

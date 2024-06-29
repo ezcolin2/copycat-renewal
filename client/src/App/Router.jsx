@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LogInAndJoin from "../pages/LogInAndJoin";
 import Main from "../pages/Main";
-import Room from "../pages/Room";
+import Room from "../pages/Game";
 
 const Router = () => {
   return (
