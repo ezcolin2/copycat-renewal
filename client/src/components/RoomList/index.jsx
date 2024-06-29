@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
  */
 export default function RoomList() {
   const navigate = useNavigate(); // 페이지 이동을 위한 함수
-  const { socket, rooms } = useMainSocket(); // 전역적으로 관리 중인 소켓
+  const { mainSocket, rooms } = useMainSocket(); // 전역적으로 관리 중인 소켓
   const [roomName, setRoomName] = useState(""); // 방 이름
 
   // 방 이름을 입력하는 함수.
@@ -29,7 +29,7 @@ export default function RoomList() {
 
   // 방을 생성하는 함수.
   const createRoom = useCallback(() => {
-    socket.emit("createRoom", roomName);
+    mainSocket.emit("createRoom", roomName);
   });
 
   // 방에 접속하는 함수.
