@@ -40,7 +40,7 @@ const navigate = useNavigate();
     });
 
     // 연결 오류가 발생하면 로그를 출력한다.
-    socket.on("connection_error", (data) => {
+    socket.on("custom_error", (data) => {
       toast.error(data.message);
       // 최대 인원 수를 넘었으면 메인 페이지로 이동
       if (data.status == 503){

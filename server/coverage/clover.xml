@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1719735096064" clover="3.2.0">
-  <project timestamp="1719735096064" name="All files">
+<coverage generated="1719751473282" clover="3.2.0">
+  <project timestamp="1719751473282" name="All files">
     <metrics statements="207" coveredstatements="161" conditionals="45" coveredconditionals="27" methods="40" coveredmethods="28" elements="292" coveredelements="216" complexity="0" loc="207" ncloc="207" packages="8" files="20" classes="20"/>
     <package name="server">
       <metrics statements="16" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -220,9 +220,9 @@
         <line num="29" count="3" type="stmt"/>
       </file>
     </package>
-    <package name="server.socket">
+    <package name="server.sockets">
       <metrics statements="61" coveredstatements="48" conditionals="14" coveredconditionals="6" methods="12" coveredmethods="8"/>
-      <file name="defaultNamespace.js" path="C:\baekjoon\copycat\server\socket\defaultNamespace.js">
+      <file name="defaultNamespace.js" path="C:\baekjoon\copycat\server\sockets\defaultNamespace.js">
         <metrics statements="33" coveredstatements="31" conditionals="6" coveredconditionals="5" methods="6" coveredmethods="5"/>
         <line num="12" count="3" type="stmt"/>
         <line num="20" count="3" type="stmt"/>
@@ -258,7 +258,7 @@
         <line num="92" count="1" type="stmt"/>
         <line num="95" count="0" type="stmt"/>
       </file>
-      <file name="roomNamespace.js" path="C:\baekjoon\copycat\server\socket\roomNamespace.js">
+      <file name="roomNamespace.js" path="C:\baekjoon\copycat\server\sockets\roomNamespace.js">
         <metrics statements="25" coveredstatements="14" conditionals="8" coveredconditionals="1" methods="5" coveredmethods="2"/>
         <line num="8" count="3" type="stmt"/>
         <line num="11" count="3" type="stmt"/>
@@ -286,7 +286,7 @@
         <line num="78" count="1" type="stmt"/>
         <line num="81" count="0" type="stmt"/>
       </file>
-      <file name="socket.js" path="C:\baekjoon\copycat\server\socket\socket.js">
+      <file name="socket.js" path="C:\baekjoon\copycat\server\sockets\socket.js">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="6" count="3" type="stmt"/>
         <line num="9" count="3" type="stmt"/>

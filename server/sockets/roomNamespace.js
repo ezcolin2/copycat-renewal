@@ -25,7 +25,7 @@ export default function attachRoomNamespace(io) {
      * 초과하면 에러.
      */
     if (connectedClients > 2) {
-      roomSocket.emit("connection_error", {
+      roomSocket.emit("custom_error", {
         status: 503,
         message: "최대 두 명만 참가 가능합니다.",
       });
@@ -83,5 +83,23 @@ export default function attachRoomNamespace(io) {
         message,
       });
     });
+
+    // 게임 시작 이벤트
+    roomSocket.on("start", async ()=>{
+      const findRoom = await Room.findOne({_id: roomId}) // roomId를 바탕으로 방 정보를 가져온다.
+      
+      // 만약 방 주인이 아닌 사람이 게임 시작 요청을 하면 거부한다.
+      if (findRoom.master !== user.nickname){
+        roomSocket.emit("custom_error", {
+          status: 403,
+          message: "접근 권한이 없습니다."
+        })
+      
+      }
+      // 방 주인이 시작 요청을 하면 승인한다.
+      else{
+
+      }
+    })
   });
 }
