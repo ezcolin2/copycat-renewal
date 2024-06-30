@@ -98,7 +98,7 @@ export default function attachRoomNamespace(io) {
       }
       // 방 주인이 시작 요청을 하면 승인한다.
       else{
-
+        const totalRound = 3; // 총 라운드 수
       }
     })
   });

@@ -8,6 +8,7 @@ import passport from 'passport';
 import dotenv from './config/dotenv/index.js';
 import sessionMiddleware from './middlewares/sessionMiddleware.js';
 import {connect} from './schemas/index.js'
+import redisClient from './utils/redis/index.js';
 connect();
 dotenv();
 const app = express()
