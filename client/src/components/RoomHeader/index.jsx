@@ -41,7 +41,7 @@ const RoomHeader = () => {
         setIsLoading(false);
         setRoomInfo(response.data);
       });
-  }, roomId);
+  }, [roomId]);
 
   return (
     <>

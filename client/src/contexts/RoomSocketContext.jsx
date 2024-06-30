@@ -5,6 +5,9 @@ import {
   useEffect,
 } from "react";
 import io from "socket.io-client";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 
 // 전역 socket context 생성
 const RoomSocketContext = createContext();
@@ -18,6 +21,8 @@ export const useRoomSocket = () => useContext(RoomSocketContext);
  * @returns {JSX.Element} children을 Provider로 묶어서 하위 컴포넌트에서 소켓을 사용할 수 있다.
  */
 export const RoomSocketProvider = ({ children, roomId }) => {
+// 페이지 이동 함수 
+const navigate = useNavigate();
   const [roomSocket, setRoomSocket] = useState(null);
   // room namespace에 처음 렌더링 될 때 한 번만 접속한다.
   useEffect(() => {
@@ -34,6 +39,17 @@ export const RoomSocketProvider = ({ children, roomId }) => {
       console.log(JSON.parse(err.message));
     });
 
+    // 연결 오류가 발생하면 로그를 출력한다.
+    socket.on("connection_error", (data) => {
+      toast.error(data.message);
+      // 최대 인원 수를 넘었으면 메인 페이지로 이동
+      if (data.status == 503){
+        navigate('/rooms');
+        
+      }
+      
+      console.log(data.message);
+    });
     // 새로운 메시지를 받으면 콘솔에 출력한다.
     // TODO: 채팅창 기능 구현
     socket.on("newMessage", (data) => {

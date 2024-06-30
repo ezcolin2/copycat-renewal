@@ -2,50 +2,43 @@ import React, { useEffect } from "react";
 import UserVideoComponent from "../../components/openvidu";
 import { useOpenVidu } from "../../contexts/OVContext";
 import { useParams } from "react-router-dom";
+import { JoinSessionBtn } from "./styles";
+import { Button } from "@mui/material";
 
 const WebCam = () => {
-  const { roomId } = useParams();
   const { session, joinSession, leaveSession, mainStreamManager, subscribers } =
     useOpenVidu();
   useEffect(() => {
-    const onbeforeunload = (event) => {
-      leaveSession();
-    };
-    window.addEventListener("beforeunload", onbeforeunload);
+    window.addEventListener("beforeunload", leaveSession);
     return () => {
-      window.removeEventListener("beforeunload", onbeforeunload);
+      leaveSession();
+      window.removeEventListener("beforeunload", leaveSession);
     };
-  }, [leaveSession]);
+  }, []);
 
   return (
     <div className="container">
       {session === null ? (
-        <input
-          className="btn btn-large btn-success"
-          type="button"
-          id="buttonjoinSession"
+        <JoinSessionBtn
           onClick={joinSession}
-          value="join session"
-        />
+        >캠 켜기</JoinSessionBtn>
       ) : null}
 
       {session !== null ? (
         <div id="session">
           <div id="session-header">
-            <h1 id="session-title">{roomId}</h1>
-            <input
-              className="btn btn-large btn-danger"
-              type="button"
-              id="buttonLeaveSession"
-              onClick={leaveSession}
-              value="Leave session"
-            />
           </div>
           <div style={{ display: "flex", justifyContent: "center" }}>
             {mainStreamManager !== undefined ? (
-              <div id="main-video" className="col-md-6">
+              <div>              <div id="main-video" className="col-md-6">
                 <UserVideoComponent streamManager={mainStreamManager} />
               </div>
+            <JoinSessionBtn
+              variant="outlined"
+              id="buttonLeaveSession"
+              onClick={leaveSession}
+            >캠 끄기</JoinSessionBtn>
+            </div>
             ) : null}
             <div id="video-container" className="col-md-6">
               {/* {publisher !== undefined ? (

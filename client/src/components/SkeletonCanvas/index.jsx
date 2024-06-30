@@ -91,7 +91,7 @@ const App = () => {
   return (
     <div>
       <canvas ref={canvasRef} style={{ position: 'absolute', top: '5px', left: '5px' }} />
-      <button id="draw" onClick={handleButtonClick}>Draw</button>
+      <button id="draw" onClick={handleButtonClick}>골격 그리기</button>
     </div>
   );
 };
