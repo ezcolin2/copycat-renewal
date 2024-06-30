@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for server/sockets/defaultNamespace.js</title>
+    <title>Code coverage report for redisQueue.js</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../prettify.css" />
-    <link rel="stylesheet" href="../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
+            background-image: url(sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">server/sockets</a> defaultNamespace.js</h1>
+        <h1><a href="index.html">All files</a> redisQueue.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.93% </span>
+                <span class="strong">60.71% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>31/33</span>
+                <span class='fraction'>17/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/6</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/6</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.93% </span>
+                <span class="strong">60.71% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>31/33</span>
+                <span class='fraction'>17/28</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -164,7 +164,9 @@
 <a name='L99'></a><a href='#L99'>99</a>
 <a name='L100'></a><a href='#L100'>100</a>
 <a name='L101'></a><a href='#L101'>101</a>
-<a name='L102'></a><a href='#L102'>102</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -175,87 +177,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -265,106 +211,166 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Server } from "socket.io";
-import passport from "passport";
-import cors from "cors";
-import sessionMiddleware from "../middlewares/sessionMiddleware.js";
-import { isAuthenticated } from "../middlewares/socketAuthMiddleware.js";
-import Room from "../schemas/room.js";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import redisClient from "./index.js";
 &nbsp;
-export default function attachDefaultNamespace(io) {
+/**
+ * @typedef {Object} TurnInfo
+ * @property {string} nickname 현재 턴을 진행 중인 유저 닉네임
+ * @property {string} role 현재 턴을 진행 중인 유저의 역할 (공격, 수비)
+ */
+/**
+ * roomId를 key로 하는 새로운 큐 생성 함수.
+ * @param {string} roomId 방의 아이디
+ * @return {void}
+ */
+export async function createQueue(roomId) {
+  try {
+    await redisClient.lPush(roomId, ""); // 빈 값 추가하여 큐 생성
+    console.log(
+      `[redis] ${roomId} room socket에 빈 값을 추가하여 큐를 생성했습니다.`
+    );
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error(`Error creating queue for roomId ${roomId}:`, error);</span>
+<span class="cstat-no" title="statement not covered" >    throw error;</span>
+  }
+}
 &nbsp;
+/**
+ * roomId에 해당하는 큐에 데이터를 추가하는 함수.
+ * @param {string} roomId 방의 아이디
+ * @param {TurnInfo} turnInfo 현재 턴의 정보
+ */
+export async function enqueueData(roomId, turnInfo) {
+  try {
+    console.log(JSON.stringify(turnInfo));
+    await redisClient.lPush(roomId, JSON.stringify(turnInfo));
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error(</span>
+      `[redis] ${roomId} room socket의 데이터를 추가하는데 실패했습니다.`,
+      error
+    );
+<span class="cstat-no" title="statement not covered" >    throw error;</span>
+  }
+}
 &nbsp;
-  // cors 에러 해결.
-  io.engine.use(
-    cors({
-      origin: "http://localhost:3000", // 연결 허용할 도메인
-      credentials: true, // 도메인이 다른 클라이언트와 쿠키 공유.
-    })
-  );
+/**
+ * roomId에 해당하는 큐에서 데이터를 제거하고 반환하는 함수.
+ * @param {string} roomId 방의 아이디
+ * @return {TurnInfo} 현재 턴의 정보
+ */
+export async function dequeueData(roomId) {
+  try {
 &nbsp;
-  // 세션 공유를 위해 express 서버와 동일한 session middleware를 장착한다.
-  io.engine.use(sessionMiddleware);
-  // 인증, 인가를 위한 passport 설정.
-  io.engine.use(passport.initialize());
-  io.engine.use(passport.session());
-  // 인증된 사람만 접속할 수 있다.
-  io.use(isAuthenticated);
-  // 소켓 연결 이벤트
-  io.on("connection", async (socket) =&gt; {
-    // 세션에 저장된 유저 정보
-    const user = socket.request.user;
-    console.log(`${user.nickname}님께서 접속하셨습니다.`);
+    const turnInfo = await redisClient.rPop(roomId);
+    // 가장 처음에는 빈 값을 저장하기 때문에 만약 빈 값이 나오면 그 다음 값을 반환한다.
+    if (turnInfo === "") {
+      const newTurnInfo = await redisClient.rPop(roomId);
 &nbsp;
-    // 현재 생성되어 있는 방 정보를 가져온다.
-    const rooms = await Room.find();
+      return JSON.parse(newTurnInfo);
+    } else <span class="missing-if-branch" title="else path not taken" >E</span>{
+<span class="cstat-no" title="statement not covered" >      return JSON.parse(turnInfo);</span>
+    }
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error(</span>
+      `[redis] ${roomId} room socket의 데이터를 빼오는데 실패했습니다.`,
+      error
+    );
+<span class="cstat-no" title="statement not covered" >    throw error;</span>
+  }
+}
 &nbsp;
-    // 현재 생성된 모든 방 정보를 전달한다.
-    socket.emit("init", rooms);
+/**
+ * roomId에 해당하는 큐가 비어 있는지 확인하는 함수.
+ * @param {string} roomId 방의 아이디
+ * @return {boolean} 큐가 비어있다면 true, 아니라면 false
+ */
+export async function isQueueEmpty(roomId) {
+  try {
+    const length = await redisClient.lLen(roomId);
+    console.log(`length : ${length}`)
+    return length === 0;
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error(</span>
+      `[redis] ${roomId} room socket의 데이터 확인하는데 실패했습니다.`,
+      error
+    );
+<span class="cstat-no" title="statement not covered" >    throw error;</span>
+  }
+}
 &nbsp;
-    // 소켓 종료 이벤트
-    socket.on("disconnect", () =&gt; {
-      console.log(`${user.nickname}님께서 접속을 종료하셨습니다.`);
-    });
-&nbsp;
-    // 소켓 에러 이벤트
-    socket.on("error", <span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
-<span class="cstat-no" title="statement not covered" >      console.error(error);</span>
-    });
-&nbsp;
-    // 소켓 방 생성 이벤트
-    socket.on("createRoom", async (roomName) =&gt; {
-      console.log(
-        `${user.nickname}님께서 ${roomName} 방 생성을 요청하셨습니다.`
-      );
-      const newRoom = new Room({
-        name: roomName,
-        master: user.nickname,
-      });
-&nbsp;
-      // 생성된 방 정보를 모두에게 전달한다.
-      const createdRoom = await newRoom.save();
-      io.emit("newRoom", createdRoom);
-    });
-&nbsp;
-    // 방 삭제 이벤트
-    socket.on("deleteRoom", async (_id) =&gt; {
-      console.log(`${user.nickname}님께서 ${_id} 방 삭제를 요청하셨습니다.`);
-      const findRoom = await Room.findOne({ _id });
-      if (!findRoom) {
-&nbsp;
-        // 찾은 방이 없는 경우에 대한 처리
-        io.to(socket.id).emit("error", {
-          code: 404,
-          message: `방을 찾을 수 없습니다.`,
-        });
-        return;
-      }
-&nbsp;
-      // 만약 방 주인이 아닌 사람이 삭제 요청 보내면 거절
-      if (user.nickname !== findRoom.master) {
-        io.to(socket.id).emit("error", {
-          code: 403,
-          message: "방 삭제 권한이 없습니다.",
-        });
-        return;
-      }
-&nbsp;
-      const { acknowledged } = await Room.deleteOne({ _id });
-      <span class="missing-if-branch" title="else path not taken" >E</span>if (acknowledged) {
-        io.emit("deletedRoom", {
-          code: 200,
-          message: `${_id}번 방 삭제에 성공했습니다.`,
-        });
-        return;
-      }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >      io.to(socket.id).emit("error", {</span>
-        code: 500,
-        message: "삭제에 실패했습니다.",
-      });
-    });
-  });
+/**
+ * roomId에 해당하는 큐를 삭제하는 함수.
+ * @param {string} roomId 방의 아이디
+ * @return {void}
+ */
+export async function deleteQueue(roomId) {
+  try {
+    await redisClient.del(roomId);
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error(</span>
+      `[redis] ${roomId} room socket의 큐를 삭제하는데 실패했습니다.`,
+      error
+    );
+<span class="cstat-no" title="statement not covered" >    throw error;</span>
+  }
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -373,16 +379,16 @@ export default function attachDefaultNamespace(io) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-30T15:17:45.226Z
+                at 2024-06-30T15:17:24.056Z
             </div>
-        <script src="../../prettify.js"></script>
+        <script src="prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
+        <script src="sorter.js"></script>
+        <script src="block-navigation.js"></script>
     </body>
 </html>
     

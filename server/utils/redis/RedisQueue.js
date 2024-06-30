@@ -1,4 +1,5 @@
 import redisClient from "./index.js";
+
 /**
  * @typedef {Object} TurnInfo
  * @property {string} nickname 현재 턴을 진행 중인 유저 닉네임
@@ -28,6 +29,7 @@ export async function createQueue(roomId) {
  */
 export async function enqueueData(roomId, turnInfo) {
   try {
+    console.log(JSON.stringify(turnInfo));
     await redisClient.lPush(roomId, JSON.stringify(turnInfo));
   } catch (error) {
     console.error(
@@ -45,11 +47,12 @@ export async function enqueueData(roomId, turnInfo) {
  */
 export async function dequeueData(roomId) {
   try {
-    const turnInfo = await redisClient.rPop(roomId);
 
+    const turnInfo = await redisClient.rPop(roomId);
     // 가장 처음에는 빈 값을 저장하기 때문에 만약 빈 값이 나오면 그 다음 값을 반환한다.
     if (turnInfo === "") {
       const newTurnInfo = await redisClient.rPop(roomId);
+
       return JSON.parse(newTurnInfo);
     } else {
       return JSON.parse(turnInfo);
@@ -71,6 +74,7 @@ export async function dequeueData(roomId) {
 export async function isQueueEmpty(roomId) {
   try {
     const length = await redisClient.lLen(roomId);
+    console.log(`length : ${length}`)
     return length === 0;
   } catch (error) {
     console.error(
