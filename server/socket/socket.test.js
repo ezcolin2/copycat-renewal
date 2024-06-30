@@ -1,9 +1,9 @@
 import webSocket from "./socket.js";
-import app from "./server.js";
+import app from "../server.js";
 import { io } from "socket.io-client";
 import request from "supertest";
 import mongoose from "mongoose";
-import {disconnect} from './schemas/index.js';
+import {disconnect} from '../schemas/index.js';
 
 const initDB = async () => {
   const collections = mongoose.connection.collections;

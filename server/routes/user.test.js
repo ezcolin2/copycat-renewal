@@ -46,7 +46,6 @@ describe("POST /api/v1/users/login", () => {
     await initDB();
   });
   afterAll(() => {
-    disconnect();
   });
   // 회원가입 먼저
   test("회원가입 성공", async () => {
@@ -134,7 +133,6 @@ describe("GET /api/v1/users/myself", () => {
     await initDB();
   });
   afterAll(() => {
-    disconnect();
   });
 
   test("내 정보 가져오기 테스트", async () => {

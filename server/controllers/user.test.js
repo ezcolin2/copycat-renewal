@@ -108,6 +108,9 @@ describe("loginUser", () => {
 
 describe("logoutUser", () => {
   const req = {
+    user: {
+
+    },
     session: {
       destroy: jest.fn(),
     },
