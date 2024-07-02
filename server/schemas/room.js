@@ -11,6 +11,10 @@ const roomSchema = new Schema({
     type: String,
     required: true
   },
+  participant: {
+    type: String,
+    required: false
+  },
   isPrivate: {
     type: Boolean,
     required: false
