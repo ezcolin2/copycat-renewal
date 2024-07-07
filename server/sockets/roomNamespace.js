@@ -122,12 +122,32 @@ export default function attachRoomNamespace(io) {
       // 방 주인이 시작 요청을 하면 승인한다.
       else {
         const totalRound = 3; // 총 라운드 수
-        // createQueue(roomId); // room id에 해당하는 큐를 생성한다.
-        // for (let i = 0; i<totalRound; i++){
-        //   enqueueData(roomId, {
-        //     nickname:
-        //   })
-        // }
+        const findRoom = await Room.findOne({_id: roomId});
+        createQueue(roomId); // room id에 해당하는 큐를 생성한다.
+
+        // 턴 정보들을 미리 큐에 넣어둠
+        for (let i = 0; i<totalRound; i++){
+          enqueueData(roomId, {
+            nickname: findRoom.master,
+            role: "ATTACK"
+          });
+          enqueueData(roomId, {
+            nickname: findRoom.participant,
+            role: "DEFENSE"
+          });
+          enqueueData(roomId, {
+            nickname: findRoom.participant,
+            role: "ATTACK"
+          });
+          enqueueData(roomId, {
+            nickname: findRoom.master,
+            role: "DEFENSE"
+          });
+        }
+
+        const turnInfo = await dequeueData(roomId);
+        roomNamespace.to(roomId).emit("newTurn", turnInfo);
+
       }
     });
   });

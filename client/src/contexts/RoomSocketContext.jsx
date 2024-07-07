@@ -56,6 +56,10 @@ const navigate = useNavigate();
       console.log(data);
     });
 
+    // 새로운 턴 시작
+    socket.on("newTurn", (turnInfo) => {
+      console.log(turnInfo);
+    });
     // socket 세팅
     setRoomSocket(socket);
 

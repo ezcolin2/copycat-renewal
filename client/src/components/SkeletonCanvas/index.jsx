@@ -1,11 +1,13 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import * as posenet from '@tensorflow-models/posenet';
 import '@tensorflow/tfjs';
 
-const App = () => {
+const SkeletonCanvas = () => {
   const canvasRef = useRef(null);
   const posenetModelRef = useRef(null);
   const videoRef = useRef(null);
+  const [isDrawing, setIsDrawing] = useState(false); // 현재 골격을 그리고 있는지
+  const [animationFrameId, setAnimationFrameId] = useState(null); // animation frame id
 
   // 포즈 ai 모델 로드.
   useEffect(() => {
@@ -19,7 +21,8 @@ const App = () => {
   }, []);
 
   // 비디오 요소를 가져와서 그 위에 골격을 그리는 함수.
-  const handleButtonClick = () => {
+  const drawBtnClick = () => {
+    setIsDrawing(true);
     const video =  document.querySelector('#main-video video');
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
@@ -40,11 +43,18 @@ const App = () => {
         drawKeypoints(pose.keypoints, 0.6, context); 
         drawSkeleton(pose.keypoints, 0.6, context);
       });
-      requestAnimationFrame(predict);
+      setAnimationFrameId(requestAnimationFrame(predict));
     };
 
     predict();
   };
+  const stopDrawing = ()=>{
+    setIsDrawing(false);
+    cancelAnimationFrame(animationFrameId); // 그만 그린다.
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
 
   // 포즈의 각 부분에 점을 찍는 함수.
   const drawKeypoints = (keypoints, minConfidence, ctx, scale = 1) => {
@@ -91,9 +101,10 @@ const App = () => {
   return (
     <div>
       <canvas ref={canvasRef} style={{ position: 'absolute', top: '5px', left: '5px' }} />
-      <button id="draw" onClick={handleButtonClick}>골격 그리기</button>
+      {!isDrawing && <button id="draw" onClick={drawBtnClick}>골격 그리기</button>}
+      {isDrawing && <button onClick = {stopDrawing}>골격 그만 그리기</button>}
     </div>
   );
 };
 
-export default App;
+export default SkeletonCanvas;
