@@ -1,8 +1,7 @@
 import LogInAndJoinLayout from "../../layouts/LogInAndJoin";
 import { BigLogo } from "./styles";
-import { useOnlyNotAuthenticated } from "../../hooks/useAuth";
 const LogInAndJoin = () => {
-  useOnlyNotAuthenticated('/rooms');
+  // useOnlyNotAuthenticated('/rooms');
   // const navigate = useNavigate()
   // const { myInfo, isError, isLoading } = useUser();
   // useEffect(() => {

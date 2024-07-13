@@ -38,17 +38,9 @@ const LogIn = ({ goToJoin }) => {
           navigate("/rooms");
         })
         .catch((error) => {
-          // 현재 로그인이 되어있다면 rooms로 이동
-          if (error.response.data.code === 401){
-            // 메인 페이지로 이동.
-            navigate("/rooms");
-            
-          }
-          else{
-            // 로그인 실패하면 에러 메시지 toast로 띄운다. 
-            toast.error(error.response.data.message);
+          // 로그인 실패하면 에러 메시지 toast로 띄운다. 
+          toast.error(error.response.data.message);
 
-          }
         })
         .finally(() => {
           // 성공, 실패 관계없이 응답이 오면 로딩바 없앰.

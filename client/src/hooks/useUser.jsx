@@ -15,11 +15,10 @@ import { useNavigate } from 'react-router-dom';
 const useUser = ()=>{
     const navigate = useNavigate();
     const fetcher = (url) => axios.get(url).then(res=>res.data);
-    const {data, error, isLoading, mutate} = useSwr(
+    const {data, error, isLoading} = useSwr(
         `${process.env.REACT_APP_SERVER_URL}/api/v1/users/myself`, 
         fetcher,
         { revalidateOnMount: true });
-    console.log(data, error, isLoading);
     // if (error){
     //     toast.error('에러 발생')
     //     navigate('/');   
@@ -27,8 +26,7 @@ const useUser = ()=>{
     return{
         myInfo: data,
         isError: error,
-        isLoading,
-        mutate
+        isLoading
     }
 }
 

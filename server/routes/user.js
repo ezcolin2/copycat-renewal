@@ -5,9 +5,9 @@ import {joinUser, loginUser, logoutUser, getMyInfo} from '../controllers/user.js
 
 const router = express.Router();
 
-router.post('/join', isNotAuthenticated, joinUser);
+router.post('/join', joinUser);
 
-router.post('/login', isNotAuthenticated, loginUser);
+router.post('/login', loginUser);
 
 router.get('/logout', isAuthenticated, logoutUser);
 
