@@ -1,6 +1,7 @@
 import useSwr from 'swr';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 /**
  * @typedef {Object} UserData
@@ -19,6 +20,11 @@ const useUser = ()=>{
         `${process.env.REACT_APP_SERVER_URL}/api/v1/users/myself`, 
         fetcher,
         { revalidateOnMount: true });
+    useEffect(()=>{
+        if (!isLoading && error){
+            navigate('/');
+        }
+    }, [error, isLoading])
     // if (error){
     //     toast.error('에러 발생')
     //     navigate('/');   
