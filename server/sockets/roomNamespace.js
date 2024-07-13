@@ -121,6 +121,15 @@ export default function attachRoomNamespace(io) {
       }
       // 방 주인이 시작 요청을 하면 승인한다.
       else {
+        // 인원 수가 부족하면 거부한다.
+        const currentClients = roomNamespace.adapter.rooms.get(roomId)?.size || 0;
+        if (currentClients < 2){
+          roomSocket.emit("custom_error", {
+            status: 403,
+            message: "인원 수가 부족합니다.",
+          });
+        }
+
         const totalRound = 3; // 총 라운드 수
         const findRoom = await Room.findOne({_id: roomId});
         createQueue(roomId); // room id에 해당하는 큐를 생성한다.

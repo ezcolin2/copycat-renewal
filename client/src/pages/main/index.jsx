@@ -3,7 +3,9 @@ import { Grid } from "@mui/material";
 import RoomList from "../../components/RoomList";
 import { MainSocketProvider } from "../../contexts/MainSocketContext";
 import MainHeader from "../../components/MainHeader";
+import { useOnlyAuthenticated } from "../../hooks/useAuth";
 const Main = () => {
+  useOnlyAuthenticated('/');
   return (
     <MainSocketProvider>
       <Grid

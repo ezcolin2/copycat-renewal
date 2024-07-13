@@ -1,4 +1,4 @@
-import { Paper, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { FileInput, ImageChangeLabel, ProfileCard } from "./styles";
 import useUser from "../../hooks/useUser";
@@ -23,11 +23,11 @@ const UserProfileCard =  () => {
         {!isLoading && (
           <>
             <Typography variant="h4">
-              {!isLoading && myInfo.nickname}
+              {!isLoading && !isError && myInfo.nickname}
             </Typography>
-            <Typography>{`${!isLoading && myInfo.matches}전 ${
-              !isLoading && myInfo.win
-            }승 ${!isLoading && myInfo.lose}패`}</Typography>
+            <Typography>{`${!isLoading && !isError && myInfo.matches}전 ${
+              !isLoading && !isError && myInfo.win
+            }승 ${!isLoading && !isError && myInfo.lose}패`}</Typography>
           </>
         )}
       </div>

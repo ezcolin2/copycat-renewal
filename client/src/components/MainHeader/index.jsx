@@ -1,10 +1,6 @@
 import Header from "../Header";
-import ProfileCard from "../UserProfileCard";
-import { Grid } from "@mui/material";
-import RoomList from "../../components/RoomList";
-import { MainSocketProvider } from "../../contexts/MainSocketContext";
 import useUser from "../../hooks/useUser";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -29,14 +25,6 @@ const MainHeader = () => {
         navigate("/");
       });
   });
-
-  // 유저 정보를 가져오는데 실패한다면 로그인, 회원가입 페이지로 이동한다.
-  useEffect(() => {
-    if (isError) {
-      toast.error("접근 권한이 없습니다.");
-      navigate("/");
-    }
-  }, [isError]);
 
   return (
     <>

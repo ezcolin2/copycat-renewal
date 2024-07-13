@@ -3,7 +3,6 @@ import UserVideoComponent from "../../components/openvidu";
 import { useOpenVidu } from "../../contexts/OVContext";
 import { useParams } from "react-router-dom";
 import { JoinSessionBtn } from "./styles";
-import { Button } from "@mui/material";
 import { useRoomSocket } from "../../contexts/RoomSocketContext";
 import axios from "axios";
 

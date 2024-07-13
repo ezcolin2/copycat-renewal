@@ -1,4 +1,3 @@
-import WebCam from "../../layouts/WebCam";
 import Header from "../Header";
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
