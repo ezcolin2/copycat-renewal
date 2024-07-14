@@ -53,6 +53,7 @@ export default function attachDefaultNamespace(io) {
       const newRoom = new Room({
         name: roomName,
         master: user.nickname,
+        isStarted: false
       });
 
       // 생성된 방 정보를 모두에게 전달한다.

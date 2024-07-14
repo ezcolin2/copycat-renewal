@@ -22,6 +22,10 @@ const roomSchema = new Schema({
   password: {
     type: String,
     required: false
+  },
+  isStarted: {
+    type: Boolean,
+    required: false
   }
 
 });

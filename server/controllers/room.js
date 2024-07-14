@@ -7,6 +7,7 @@ export const findRoom = async (req, res)=>{
     res.status(200).json({
         _id: room._id,
         name: room.name,
-        master: room.master
+        master: room.master,
+        
     });
 }

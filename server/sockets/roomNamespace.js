@@ -128,10 +128,29 @@ export default function attachRoomNamespace(io) {
             status: 403,
             message: "인원 수가 부족합니다.",
           });
+          return;
         }
 
         const totalRound = 3; // 총 라운드 수
         const findRoom = await Room.findOne({_id: roomId});
+
+        // 만약 게임이 시작되었다면 거부한다.
+        if (findRoom.isStarted){
+          roomSocket.emit("custom_error", {
+            status: 400,
+            message: "이미 게임이 시작되었습니다.",
+          });
+          return;
+        }
+        // 게임이 시작된 것을 갱신한다.
+        await Room.updateOne(
+          {
+            _id: roomId,
+          },
+          {
+            isStarted: true
+          }
+        );
         createQueue(roomId); // room id에 해당하는 큐를 생성한다.
 
         // 턴 정보들을 미리 큐에 넣어둠
