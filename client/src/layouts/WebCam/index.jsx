@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import UserVideoComponent from "../../components/openvidu";
+import UserVideoComponent from "../../components/UserVideo";
 import { useOpenVidu } from "../../contexts/OVContext";
 import { useParams } from "react-router-dom";
 import { JoinSessionBtn } from "./styles";
 import { useRoomSocket } from "../../contexts/RoomSocketContext";
 import axios from "axios";
-
 const WebCam = () => {
   const { roomId } = useParams();
   const [userData, setUserData] = useState(null); // 내 정보
@@ -51,7 +50,6 @@ const WebCam = () => {
           <div style={{ display: "flex", justifyContent: "center" }}>
             {mainStreamManager !== undefined ? (
               <div>
-                {" "}
                 <div id="main-video" className="col-md-6">
                   <UserVideoComponent streamManager={mainStreamManager} />
                 </div>

@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as posenet from '@tensorflow-models/posenet';
 import '@tensorflow/tfjs';
+import { useRefContext } from '../../contexts/RefContext';
 
 const SkeletonCanvas = () => {
   const canvasRef = useRef(null);
   const posenetModelRef = useRef(null);
-  const videoRef = useRef(null);
+  const {videoRef} = useRefContext();
   const [isDrawing, setIsDrawing] = useState(false); // 현재 골격을 그리고 있는지
   const [animationFrameId, setAnimationFrameId] = useState(null); // animation frame id
 

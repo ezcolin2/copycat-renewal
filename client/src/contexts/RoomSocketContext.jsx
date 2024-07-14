@@ -21,9 +21,12 @@ export const useRoomSocket = () => useContext(RoomSocketContext);
  * @returns {JSX.Element} children을 Provider로 묶어서 하위 컴포넌트에서 소켓을 사용할 수 있다.
  */
 export const RoomSocketProvider = ({ children, roomId }) => {
-// 페이지 이동 함수 
-const navigate = useNavigate();
+  // 페이지 이동 함수 
+  const navigate = useNavigate();
   const [roomSocket, setRoomSocket] = useState(null);
+  const [isTimer, setIsTimer] = useState(false); // 타이머 실행 여부
+  const [timerNickname, setTimerNickname] = useState(null); // 타이머를 실행할 사람의 닉네임
+
   // room namespace에 처음 렌더링 될 때 한 번만 접속한다.
   useEffect(() => {
     // room namespace에 연결
@@ -59,6 +62,8 @@ const navigate = useNavigate();
     // 새로운 턴 시작
     socket.on("newTurn", (turnInfo) => {
       console.log(turnInfo);
+      setIsTimer(true);
+      setTimerNickname(turnInfo.nickname);
     });
     // socket 세팅
     setRoomSocket(socket);
@@ -71,7 +76,7 @@ const navigate = useNavigate();
 
   // socket을 하위 컴포넌트가 사용할 수 있도록 한다.
   return (
-    <RoomSocketContext.Provider value={{ roomSocket }}>
+    <RoomSocketContext.Provider value={{ roomSocket, isTimer, setIsTimer, timerNickname }}>
       {children}
     </RoomSocketContext.Provider>
   );
