@@ -15,3 +15,6 @@
 * 만약 자신이 현재 라운드를 진행하는 사람이라면 타이머를 걸고 정해진 시간 뒤에 자신의 사진을 소켓을 통해 서버로 전송한다.
 * 공격자의 사진은 서버의 메모리에 잠시 보관해두고 수비자의 사진이 오면 포즈 유사도를 측정하여 수비자에게 점수를 준다.
 * 모든 라운드가 끝나고 서로의 점수를 비교하여 더 높은 점수를 얻은 사람이 승리한다.
+
+## sequence diagram
+![copycat-sequence-diagram](https://github.com/user-attachments/assets/f40fa094-06a5-4e01-aaa7-4d6ad0adde08)
