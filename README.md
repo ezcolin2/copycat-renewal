@@ -17,4 +17,4 @@
 * 모든 라운드가 끝나고 서로의 점수를 비교하여 더 높은 점수를 얻은 사람이 승리한다.
 
 ## sequence diagram
-![copycat-sequence-diagram](https://github.com/user-attachments/assets/f40fa094-06a5-4e01-aaa7-4d6ad0adde08)
+![image](https://github.com/user-attachments/assets/cf2c5cab-ef30-4688-a54e-2a233614bfbe)
