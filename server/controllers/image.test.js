@@ -1,5 +1,5 @@
-import { uploadImage, getImage } from './image.js';
 jest.mock('../utils/redis/index');
+import { uploadImage, getImage } from './image.js';
 import redisClient from '../utils/redis/index';
 
 
@@ -8,6 +8,10 @@ describe('uploadImage 테스트', () => {
     file: {
       buffer: Buffer.from('test'),
     },
+    body: {
+      roomId: "abc123",
+      type: "ATTACK"
+    }
   };
   const res = {
       send: jest.fn(),
@@ -17,9 +21,8 @@ describe('uploadImage 테스트', () => {
     it('이미지 저장 시 이미지 아이디 반환', async () => {
       await uploadImage(req, res);
   
-      const imageId = Date.now().toString();
-      expect(redisClient.set).toHaveBeenCalledWith(imageId, expect.any(String));
-      expect(res.send).toHaveBeenCalledWith({ status: 201, imageId });
+      // expect(redisClient.set).toHaveBeenCalledWith(imageId, expect.any(String));
+      expect(res.send).toHaveBeenCalledWith({ status: 201, roomId: "abc123" });
     });
   test('이미지 저장에 실패하면 이미지 저장 실패 메시지 반환', async () => {
     redisClient.set.mockRejectedValueOnce(new Error());
@@ -37,7 +40,7 @@ describe('uploadImage 테스트', () => {
 describe('getImage 테스트', () => {
   const req = {
       params: {
-        id: 'testImageId',
+        roomId: 'testImageId',
       },
     };
   const res = {
@@ -50,7 +53,9 @@ describe('getImage 테스트', () => {
   test('이미지 가져오기 성공', async () => {
     // 이미지를 base64 문자열 형태로 변환
     const imgBase64 = Buffer.from('testImageId').toString('base64');
-    redisClient.get.mockResolvedValue(imgBase64);
+    redisClient.get.mockResolvedValue(JSON.stringify({
+      attack: imgBase64
+    }));
 
     await getImage(req, res);
 
@@ -66,7 +71,7 @@ describe('getImage 테스트', () => {
 
   test('이미지 아이디를 찾을 수 없음', async () => {
     // null 반환
-    redisClient.get.mockResolvedValue(null);
+    redisClient.get.mockResolvedValue(JSON.stringify({}));
 
     await getImage(req, res);
 

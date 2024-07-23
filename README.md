@@ -18,3 +18,20 @@
 
 ## sequence diagram
 ![image](https://github.com/user-attachments/assets/cf2c5cab-ef30-4688-a54e-2a233614bfbe)
+
+## trouble shooting
+
+### 소켓 통합 테스트 이슈
+**[문제 상황]**
+jest와 supertest를 사용해서 통합 테스트 코드를 작성하였다.
+
+기능 별로 describe 블록을 나눠서 서버를 실행시키고 있는데 describ 블록 별로 동시에 실행되어 port 번호가 겹쳐 테스트가 제대로 동작하지 않는 이슈가 발생했다.
+
+**[해결 방법]**
+describe 별로 api 서버를 실행할 때 포트 번호를 달리한다.
+
+jest를 실행할 때 --runInBand 옵션을 사용하여 병렬 실행을 막는다.
+
+**--runInBand 옵션**
+테스트를 실행하는 자식 프로세스의 워커 풀을 만들지 않고 현재 프로세스에서 직렬로 테스트를 수행한다.
+

@@ -1,7 +1,6 @@
 import app from "../server.js";
 import request from "supertest";
 import mongoose from "mongoose";
-import { disconnect } from "../schemas/index.js";
 
 const initDB = async () => {
   const collections = mongoose.connection.collections;

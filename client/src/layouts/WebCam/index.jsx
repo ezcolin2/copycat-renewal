@@ -34,7 +34,6 @@ const WebCam = () => {
     };
   }, []);
   const startGame = useCallback(() => {
-    console.log(roomSocket);
     roomSocket.emit("start");
   }, [roomSocket]);
 

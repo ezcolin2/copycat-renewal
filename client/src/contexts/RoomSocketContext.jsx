@@ -1,13 +1,8 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-} from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import io from "socket.io-client";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
+import useUser from "../hooks/useUser";
 
 // 전역 socket context 생성
 const RoomSocketContext = createContext();
@@ -21,12 +16,12 @@ export const useRoomSocket = () => useContext(RoomSocketContext);
  * @returns {JSX.Element} children을 Provider로 묶어서 하위 컴포넌트에서 소켓을 사용할 수 있다.
  */
 export const RoomSocketProvider = ({ children, roomId }) => {
-  // 페이지 이동 함수 
+  // 페이지 이동 함수
   const navigate = useNavigate();
   const [roomSocket, setRoomSocket] = useState(null);
   const [isTimer, setIsTimer] = useState(false); // 타이머 실행 여부
   const [timerNickname, setTimerNickname] = useState(null); // 타이머를 실행할 사람의 닉네임
-
+  const { myInfo, isError, isLoading } = useUser();
   // room namespace에 처음 렌더링 될 때 한 번만 접속한다.
   useEffect(() => {
     // room namespace에 연결
@@ -46,11 +41,10 @@ export const RoomSocketProvider = ({ children, roomId }) => {
     socket.on("custom_error", (data) => {
       toast.error(data.message);
       // 최대 인원 수를 넘었으면 메인 페이지로 이동
-      if (data.status == 503){
-        navigate('/rooms');
-        
+      if (data.status == 503) {
+        navigate("/rooms");
       }
-      
+
       console.log(data.message);
     });
     // 새로운 메시지를 받으면 콘솔에 출력한다.
@@ -61,9 +55,11 @@ export const RoomSocketProvider = ({ children, roomId }) => {
 
     // 새로운 턴 시작
     socket.on("newTurn", (turnInfo) => {
-      console.log(turnInfo);
+      // countdown timer 시작
+      // countdown timer 내부에서 사진 전송
       setIsTimer(true);
       setTimerNickname(turnInfo.nickname);
+
     });
     // socket 세팅
     setRoomSocket(socket);
@@ -76,7 +72,9 @@ export const RoomSocketProvider = ({ children, roomId }) => {
 
   // socket을 하위 컴포넌트가 사용할 수 있도록 한다.
   return (
-    <RoomSocketContext.Provider value={{ roomSocket, isTimer, setIsTimer, timerNickname }}>
+    <RoomSocketContext.Provider
+      value={{ roomSocket, isTimer, setIsTimer, timerNickname }}
+    >
       {children}
     </RoomSocketContext.Provider>
   );

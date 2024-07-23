@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">80.64% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>20/20</span>
+                <span class='fraction'>25/31</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>3/6</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">80.64% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>20/20</span>
+                <span class='fraction'>25/31</span>
             </div>
         
             
@@ -111,15 +111,56 @@
 <a name='L46'></a><a href='#L46'>46</a>
 <a name='L47'></a><a href='#L47'>47</a>
 <a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -136,7 +177,12 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -163,14 +209,32 @@
 &nbsp;
 export const uploadImage = async (req, res) =&gt; {
   const imgBuffer = req.file.buffer;
-  const imageId = Date.now().toString(); // 이미지 ID 생성 (예: 타임스탬프)
   const imgBase64 = imgBuffer.toString("base64"); // Buffer를 Base64 문자열로 변환
-&nbsp;
+  const {roomId, type} = req.body;
   try {
-    await redisClient.set(imageId, imgBase64);
+    const exists = await redisClient.exists(roomId);
+    // roomId key 값이 존재하지 않는다면 새로 객체를 만들어서 넣어준다.
+    if (!exists){
+      await redisClient.set(roomId, JSON.stringify({
+        attack: imgBase64
+      }))
+    }
+&nbsp;
+    // 존재한다면 객체를 가져와서 type에 맞게 세팅.
+    else<span class="missing-if-branch" title="else path not taken" >E</span>{
+      const imgObjectString = <span class="cstat-no" title="statement not covered" >await redisClient.get(roomId);</span>
+      const imgObject = <span class="cstat-no" title="statement not covered" >JSON.parse(imgObjectString);</span>
+<span class="cstat-no" title="statement not covered" >      if (type === "ATTACK"){</span>
+<span class="cstat-no" title="statement not covered" >        imgObject.attack = imgBase64;</span>
+      } else{
+<span class="cstat-no" title="statement not covered" >        imgObject.defense = imgBase64;</span>
+      }
+      // 객체를 다시 저장
+<span class="cstat-no" title="statement not covered" >      await redisClient.set(roomId, JSON.stringify(imgObject));</span>
+    }
     res.send({ 
         status: 201,
-        imageId 
+        roomId 
     });
   } catch (err) {
     console.error(err);
@@ -182,9 +246,14 @@ export const uploadImage = async (req, res) =&gt; {
 };
 &nbsp;
 export const getImage = async (req, res) =&gt; {
-  const imageId = req.params.id;
+  const roomId = req.params.roomId;
   try {
-    const imgBase64 = await redisClient.get(imageId);
+    // JSON parse해서 attack 정보만 가져옴.
+    // defense는 가져올 필요 없음.
+    const imgObjectString = await redisClient.get(roomId);
+    const imgObject = JSON.parse(imgObjectString);
+    const imgBase64 = imgObject.attack;
+    console.log(imgBase64);
     if (!imgBase64) {
       return res.status(404).send({
         status: 404,
@@ -214,7 +283,7 @@ export const getImage = async (req, res) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-22T01:36:53.065Z
+                at 2024-07-23T13:29:29.458Z
             </div>
         <script src="../prettify.js"></script>
         <script>

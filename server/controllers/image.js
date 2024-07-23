@@ -2,14 +2,32 @@ import redisClient from "../utils/redis/index.js";
 
 export const uploadImage = async (req, res) => {
   const imgBuffer = req.file.buffer;
-  const imageId = Date.now().toString(); // 이미지 ID 생성 (예: 타임스탬프)
   const imgBase64 = imgBuffer.toString("base64"); // Buffer를 Base64 문자열로 변환
-
+  const {roomId, type} = req.body;
   try {
-    await redisClient.set(imageId, imgBase64);
+    const exists = await redisClient.exists(roomId);
+    // roomId key 값이 존재하지 않는다면 새로 객체를 만들어서 넣어준다.
+    if (!exists){
+      await redisClient.set(roomId, JSON.stringify({
+        attack: imgBase64
+      }))
+    }
+
+    // 존재한다면 객체를 가져와서 type에 맞게 세팅.
+    else{
+      const imgObjectString = await redisClient.get(roomId);
+      const imgObject = JSON.parse(imgObjectString);
+      if (type === "ATTACK"){
+        imgObject.attack = imgBase64;
+      } else{
+        imgObject.defense = imgBase64;
+      }
+      // 객체를 다시 저장
+      await redisClient.set(roomId, JSON.stringify(imgObject));
+    }
     res.send({ 
         status: 201,
-        imageId 
+        roomId 
     });
   } catch (err) {
     console.error(err);
@@ -21,9 +39,14 @@ export const uploadImage = async (req, res) => {
 };
 
 export const getImage = async (req, res) => {
-  const imageId = req.params.id;
+  const roomId = req.params.roomId;
   try {
-    const imgBase64 = await redisClient.get(imageId);
+    // JSON parse해서 attack 정보만 가져옴.
+    // defense는 가져올 필요 없음.
+    const imgObjectString = await redisClient.get(roomId);
+    const imgObject = JSON.parse(imgObjectString);
+    const imgBase64 = imgObject.attack;
+    console.log(imgBase64);
     if (!imgBase64) {
       return res.status(404).send({
         status: 404,
