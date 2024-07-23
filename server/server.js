@@ -1,6 +1,7 @@
 import express from 'express'
 import userRouter from './routes/user.js';
 import roomRouter from './routes/room.js';
+import imageRouter from './routes/image.js';
 import openviduRouter from './routes/openvidu.js';
 import cors from 'cors';
 import passportConfig from './passport/index.js';
@@ -8,7 +9,6 @@ import passport from 'passport';
 import dotenv from './config/dotenv/index.js';
 import sessionMiddleware from './middlewares/sessionMiddleware.js';
 import {connect} from './schemas/index.js'
-import redisClient from './utils/redis/index.js';
 connect();
 dotenv();
 const app = express()
@@ -31,6 +31,7 @@ app.use(express.static('../client/build'));
 // })
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/rooms', roomRouter);
+app.use('/api/v1/images', imageRouter);
 app.use('/api/v1/openvidu/connections', openviduRouter);
 app.use((err, req, res, next) => {
     console.error(err.stack);

@@ -43,10 +43,11 @@ export const getImage = async (req, res) => {
   try {
     // JSON parse해서 attack 정보만 가져옴.
     // defense는 가져올 필요 없음.
+    const exists = await redisClient.exists(roomId);
+
     const imgObjectString = await redisClient.get(roomId);
     const imgObject = JSON.parse(imgObjectString);
     const imgBase64 = imgObject.attack;
-    console.log(imgBase64);
     if (!imgBase64) {
       return res.status(404).send({
         status: 404,
