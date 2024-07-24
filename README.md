@@ -1,4 +1,32 @@
-# Copy Cat 게임 알고리즘
+# Copy Cat 게임
+
+## 실행 방법
+기본적으로 클라우드 환경에서 배포하기 위한 프로젝트라서 로컬에서 실행시키기 위해 다음과 같은 과정을 진행해야 한다.
+
+1. docker를 사용하여 openvidu 실행 
+```bash
+docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-dev:2.30.0
+```
+
+2. client, server 디렉토리 내부에서 각각 필요한 패키지 설치 
+```bash
+npm i
+```
+
+3. 포즈 유사도 계산을 위한 파이썬 라이브러리 설치
+```bash
+pip install fastapi uvicorn tensorflow tensorflow-hub pillow numpy
+```
+
+4. 포즈 유사도 계산을 위한 fast api 실행 
+```bash
+uvicorn postCalculateApi:app --reload
+```
+
+5. server 디렉토리로 이동 후 npm run dev 실행
+```bash
+npm run dev
+```
 
 ## 게임 설명
 * 총 두 명이서 게임을 시작한다.
