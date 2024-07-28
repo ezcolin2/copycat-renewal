@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import * as posenet from '@tensorflow-models/posenet';
 import '@tensorflow/tfjs';
 import { useRefContext } from '../../contexts/RefContext';
+import { poseSimilarity } from 'posenet-similarity';
 
 const SkeletonCanvas = () => {
   const canvasRef = useRef(null);
@@ -39,6 +40,7 @@ const SkeletonCanvas = () => {
 
     const predict = () => {
       posenetModelRef.current.estimateSinglePose(video).then((pose) => {
+        console.log(pose);
         canvas.width = video.width; 
         canvas.height = video.height;
         drawKeypoints(pose.keypoints, 0.6, context); 
