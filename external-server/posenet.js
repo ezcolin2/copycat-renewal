@@ -19,7 +19,6 @@ app.get("/api/v1/images/:roomId", async (req, res) => {
   console.log(data);
 });
 app.get("/api/v1/pose-similarity/:roomId", async (req, res) => {
-  const exists = await redisClient.exists(req.params.roomId);
   if (isQueueEmpty(req.params.roomId)) {
     return res.status(404).send({
       code: 404,
