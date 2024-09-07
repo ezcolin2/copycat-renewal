@@ -1,23 +1,16 @@
 import app from "../server.js";
 import request from "supertest";
-import mongoose from "mongoose";
-import { connectDB, disconnectDB } from "../schemas/index.js";
+import { connectDB, disconnectDB, initDB } from "../schemas/index.js";
 import dotenv from "../config/dotenv/index.js";
 
-const initDB = async () => {
-  const collections = mongoose.connection.collections;
-
-  for (const key in collections) {
-    const collection = collections[key];
-    await collection.deleteMany({});
-  }
-};
-
 describe("POST /api/v1/users/join", () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
     await connectDB();
     await initDB();
     dotenv();
+  });
+  afterAll(async () => {
+    await disconnectDB();
   });
   test("회원가입 성공, 이름 중복 테스트", async () => {
     // 회원가입 성공
@@ -45,12 +38,17 @@ describe("POST /api/v1/users/join", () => {
 });
 
 describe("POST /api/v1/users/login", () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
     await connectDB();
     await initDB();
     dotenv();
   });
-  afterAll(() => {});
+  afterAll(async () => {
+    await disconnectDB();
+  });
+  afterEach(async () => {
+    await initDB();
+  });
   // 회원가입 먼저
   test("회원가입 성공", async () => {
     const response = await request(app).post("/api/v1/users/join").send({
@@ -133,14 +131,17 @@ describe("POST /api/v1/users/login", () => {
 });
 
 describe("GET /api/v1/users/myself", () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
     await connectDB();
     await initDB();
     dotenv();
   });
-  afterAll(() => {});
+  afterAll(async () => {
+    await disconnectDB();
+  });
 
   test("내 정보 가져오기 테스트", async () => {
+    console.log("내 정보 가져오기");
     const agent = request.agent(app);
     const joinResponse = await agent
       .post("/api/v1/users/join")

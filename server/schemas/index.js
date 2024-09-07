@@ -11,11 +11,19 @@ export const connectDB = async () => {
   });
   mongoose.connection.on("disconnected", () => {
     console.log("연결 실패 재연결 시도합니다.");
-    connectDB();
+    // connectDB();
   });
 };
 
 export const disconnectDB = async () => {
   await mongoose.disconnect();
   console.log("mongoDB 연결을 끊었습니다.");
+};
+export const initDB = async () => {
+  const collections = mongoose.connection.collections;
+
+  for (const key in collections) {
+    const collection = collections[key];
+    await collection.deleteMany({});
+  }
 };

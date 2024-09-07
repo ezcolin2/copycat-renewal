@@ -1,32 +1,17 @@
 import app from "../server.js";
 import request from "supertest";
-import mongoose from "mongoose";
 import dirname from "./dirname.cjs";
 import path from "path";
-import redisClient from "../utils/redis/index.js";
-import { connectDB, disconnectDB } from "../schemas/index.js";
+import { connectDB, disconnectDB, initDB } from "../schemas/index.js";
 import dotenv from "../config/dotenv/index.js";
 
 const { __dirname } = dirname;
 
 const fs = require("fs");
 
-const initDB = async () => {
-  // mongoDB 초기화
-  const collections = mongoose.connection.collections;
-
-  for (const key in collections) {
-    const collection = collections[key];
-    await collection.deleteMany({});
-  }
-
-  // redis 초기화.
-  await redisClient.flushDb();
-};
-
 describe("POST /api/v1/images/", () => {
   const agent = request.agent(app);
-  beforeEach(async () => {
+  beforeAll(async () => {
     await connectDB();
     await initDB();
     dotenv();
@@ -49,6 +34,9 @@ describe("POST /api/v1/images/", () => {
       code: 200,
       message: "로그인 성공",
     });
+  });
+  afterAll(async () => {
+    await disconnectDB();
   });
   test("이미지 업로드 성공", async () => {
     // const response = await agent.post("/api/v1/images/").attach("file", image).send({
@@ -70,7 +58,7 @@ describe("POST /api/v1/images/", () => {
 
 describe("GET /api/v1/images/:roomId", () => {
   const agent = request.agent(app);
-  beforeEach(async () => {
+  beforeAll(async () => {
     await connectDB();
     await initDB();
     dotenv();
@@ -93,6 +81,9 @@ describe("GET /api/v1/images/:roomId", () => {
       code: 200,
       message: "로그인 성공",
     });
+  });
+  afterAll(async () => {
+    await disconnectDB();
   });
   test("이미지 업로드 후 가져오기 성공", async () => {
     const imagePath = path.join(
@@ -267,7 +258,7 @@ describe("GET /api/v1/images/poses/:roomId", () => {
     ],
   };
   const agent = request.agent(app);
-  beforeEach(async () => {
+  beforeAll(async () => {
     await connectDB();
     await initDB();
     dotenv();
@@ -290,6 +281,9 @@ describe("GET /api/v1/images/poses/:roomId", () => {
       code: 200,
       message: "로그인 성공",
     });
+  });
+  afterAll(async () => {
+    await disconnectDB();
   });
   test("포즈 객체 업로드 후 가져오기 성공", async () => {
     const response = await agent.post("/api/v1/images/poses").send({
@@ -319,7 +313,7 @@ describe("GET /api/v1/images/poses/:roomId", () => {
     // expect(getResponse.body).toEqual(fs.readFileSync(imagePath));
   });
   test("존재하지 않은 이미지", async () => {
-    const getResponse = await agent.get("/api/v1/images/abc123");
+    const getResponse = await agent.get("/api/v1/images/abc12345");
     expect(getResponse.body).toEqual({
       status: 500,
       message: "이미지를 가져오는데 실패했습니다.",

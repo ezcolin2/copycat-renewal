@@ -3,17 +3,8 @@ import app from "../server.js";
 import { io } from "socket.io-client";
 import request from "supertest";
 import mongoose from "mongoose";
-import { connectDB, disconnectDB } from "../schemas/index.js";
+import { connectDB, disconnectDB, initDB } from "../schemas/index.js";
 import dotenv from "../config/dotenv/index.js";
-
-const initDB = async () => {
-  const collections = mongoose.connection.collections;
-
-  for (const key in collections) {
-    const collection = collections[key];
-    await collection.deleteMany({});
-  }
-};
 
 describe("소켓 연결 테스트", () => {
   let loginResponse;
@@ -49,8 +40,9 @@ describe("소켓 연결 테스트", () => {
     });
   });
 
-  afterAll(() => {
-    server.close();
+  afterAll(async () => {
+    // server.close();
+    await disconnectDB();
   });
 
   afterEach(() => {
@@ -157,10 +149,11 @@ describe("소켓 채팅방 테스트", () => {
   });
 
   // 테스트가 모두 끝나면 서버 종료
-  afterAll(() => {
-    newClientSocket.disconnect();
-    clientSocket.disconnect();
-    server.close();
+  afterAll(async () => {
+    // newClientSocket.disconnect();
+    // clientSocket.disconnect();
+    // server.close();
+    await disconnectDB();
   });
 
   test("채팅방 생성, 삭제 성공", (done) => {
@@ -300,11 +293,11 @@ describe("채팅방 참여 테스트", () => {
 
   // 테스트가 모두 끝나면 서버 종료
   afterAll(async () => {
-    roomSocket1.disconnect();
-    roomSocket2.disconnect();
-    clientSocket.disconnect();
-    server.close();
-    disconnectDB();
+    // roomSocket1.disconnect();
+    // roomSocket2.disconnect();
+    // clientSocket.disconnect();
+    // server.close();
+    await disconnectDB();
   });
   test("채팅방 접속 성공", (done) => {
     // 접속
