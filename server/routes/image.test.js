@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import dirname from "./dirname.cjs";
 import path from "path";
 import redisClient from "../utils/redis/index.js";
+import { connectDB, disconnectDB } from "../schemas/index.js";
+import dotenv from "../config/dotenv/index.js";
 
 const { __dirname } = dirname;
 
@@ -25,7 +27,9 @@ const initDB = async () => {
 describe("POST /api/v1/images/", () => {
   const agent = request.agent(app);
   beforeEach(async () => {
+    await connectDB();
     await initDB();
+    dotenv();
     const joinResponse = await agent
       .post("/api/v1/users/join")
       .send({ nickname: "chulsoo", password: "password" })
@@ -67,7 +71,9 @@ describe("POST /api/v1/images/", () => {
 describe("GET /api/v1/images/:roomId", () => {
   const agent = request.agent(app);
   beforeEach(async () => {
+    await connectDB();
     await initDB();
+    dotenv();
     const joinResponse = await agent
       .post("/api/v1/users/join")
       .send({ nickname: "chulsoo", password: "password" })
@@ -117,7 +123,6 @@ describe("GET /api/v1/images/:roomId", () => {
     });
   });
 });
-
 
 describe("GET /api/v1/images/poses/:roomId", () => {
   const poseObject = {
@@ -263,7 +268,9 @@ describe("GET /api/v1/images/poses/:roomId", () => {
   };
   const agent = request.agent(app);
   beforeEach(async () => {
+    await connectDB();
     await initDB();
+    dotenv();
     const joinResponse = await agent
       .post("/api/v1/users/join")
       .send({ nickname: "chulsoo", password: "password" })
@@ -285,29 +292,25 @@ describe("GET /api/v1/images/poses/:roomId", () => {
     });
   });
   test("포즈 객체 업로드 후 가져오기 성공", async () => {
-    const response = await agent
-      .post("/api/v1/images/poses")
-      .send({
-        roomId: 123, 
-        type: "ATTACK",
-        poseObject
-      });
+    const response = await agent.post("/api/v1/images/poses").send({
+      roomId: 123,
+      type: "ATTACK",
+      poseObject,
+    });
     expect(response.body).toEqual({
       status: 201,
-      roomId: 123
+      roomId: 123,
     });
 
     // 저장한 포즈 객체 가져오기.
     const getResponse = await agent.get("/api/v1/images/poses/123");
     console.log(getResponse.body);
     expect(getResponse.body).toEqual({
-      status:200, 
+      status: 200,
       res: {
-        attack: poseObject
-      }
+        attack: poseObject,
+      },
     });
-    
-
 
     // expect(response.body).toEqual({ status: 201, roomId: "abc123" });
 

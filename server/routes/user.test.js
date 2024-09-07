@@ -1,6 +1,8 @@
 import app from "../server.js";
 import request from "supertest";
 import mongoose from "mongoose";
+import { connectDB, disconnectDB } from "../schemas/index.js";
+import dotenv from "../config/dotenv/index.js";
 
 const initDB = async () => {
   const collections = mongoose.connection.collections;
@@ -13,7 +15,9 @@ const initDB = async () => {
 
 describe("POST /api/v1/users/join", () => {
   beforeEach(async () => {
+    await connectDB();
     await initDB();
+    dotenv();
   });
   test("회원가입 성공, 이름 중복 테스트", async () => {
     // 회원가입 성공
@@ -42,10 +46,11 @@ describe("POST /api/v1/users/join", () => {
 
 describe("POST /api/v1/users/login", () => {
   beforeEach(async () => {
+    await connectDB();
     await initDB();
+    dotenv();
   });
-  afterAll(() => {
-  });
+  afterAll(() => {});
   // 회원가입 먼저
   test("회원가입 성공", async () => {
     const response = await request(app).post("/api/v1/users/join").send({
@@ -129,10 +134,11 @@ describe("POST /api/v1/users/login", () => {
 
 describe("GET /api/v1/users/myself", () => {
   beforeEach(async () => {
+    await connectDB();
     await initDB();
+    dotenv();
   });
-  afterAll(() => {
-  });
+  afterAll(() => {});
 
   test("내 정보 가져오기 테스트", async () => {
     const agent = request.agent(app);
@@ -145,7 +151,7 @@ describe("GET /api/v1/users/myself", () => {
       code: 200,
       message: "회원가입 성공",
     });
-    
+
     const loginResponse = await agent
       .post("/api/v1/users/login")
       .send({ nickname: "chulsoo", password: "password" })
@@ -155,7 +161,7 @@ describe("GET /api/v1/users/myself", () => {
       code: 200,
       message: "로그인 성공",
     });
-    
+
     const myInfo = await agent.get("/api/v1/users/myself");
     expect(myInfo.body).toEqual({
       nickname: "chulsoo",
@@ -164,17 +170,16 @@ describe("GET /api/v1/users/myself", () => {
       lose: 0,
     });
 
-    const logoutResponse = await agent.get('/api/v1/users/logout');
+    const logoutResponse = await agent.get("/api/v1/users/logout");
     expect(logoutResponse.body).toEqual({
       code: 200,
       message: "로그아웃에 성공했습니다.",
-    })
+    });
 
     const myFailInfo = await agent.get("/api/v1/users/myself");
     expect(myFailInfo.body).toEqual({
       code: 401,
       message: "로그인이 필요합니다.",
     });
-    
   });
 });

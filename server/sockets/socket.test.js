@@ -3,7 +3,8 @@ import app from "../server.js";
 import { io } from "socket.io-client";
 import request from "supertest";
 import mongoose from "mongoose";
-import {disconnect} from '../schemas/index.js';
+import { connectDB, disconnectDB } from "../schemas/index.js";
+import dotenv from "../config/dotenv/index.js";
 
 const initDB = async () => {
   const collections = mongoose.connection.collections;
@@ -18,9 +19,11 @@ describe("소켓 연결 테스트", () => {
   let loginResponse;
   let server;
   let clientSocket;
-  const port = 8000
+  const port = 8000;
   beforeAll(async () => {
+    await connectDB();
     await initDB();
+    dotenv();
     server = app.listen(port, () => {
       console.log(`${port} 포트 연결`);
     });
@@ -99,7 +102,9 @@ describe("소켓 채팅방 테스트", () => {
   const port = 8001;
   // 시작하기 전에 로그인, 세션 접속
   beforeAll(async () => {
+    await connectDB();
     await initDB();
+    dotenv();
     server = app.listen(port, () => {
       console.log(`${port} 포트 연결`);
     });
@@ -236,7 +241,9 @@ describe("채팅방 참여 테스트", () => {
   const port = 8002;
   // 시작하기 전에 로그인, 세션 접속
   beforeAll(async () => {
+    await connectDB();
     await initDB();
+    dotenv();
     server = app.listen(port, () => {
       console.log(`${port} 포트 연결`);
     });
@@ -292,12 +299,12 @@ describe("채팅방 참여 테스트", () => {
   });
 
   // 테스트가 모두 끝나면 서버 종료
-  afterAll( async () => {
+  afterAll(async () => {
     roomSocket1.disconnect();
     roomSocket2.disconnect();
     clientSocket.disconnect();
     server.close();
-    disconnect();
+    disconnectDB();
   });
   test("채팅방 접속 성공", (done) => {
     // 접속
@@ -313,8 +320,8 @@ describe("채팅방 참여 테스트", () => {
     // 방 하나 생성
     clientSocket.on("newRoom", (createdRoom) => {
       console.log(`새로운 방 정보 ${createdRoom._id}`);
-      console.log(loginResponse.headers["set-cookie"])
-      console.log(newLoginResponse.headers["set-cookie"])
+      console.log(loginResponse.headers["set-cookie"]);
+      console.log(newLoginResponse.headers["set-cookie"]);
       clientSocket.disconnect();
       roomSocket1 = io(
         `http://localhost:${port}/rooms?roomId=${createdRoom._id}`,
@@ -330,7 +337,7 @@ describe("채팅방 참여 테스트", () => {
           userName: "system",
           message: `minsoo님께서 입장하셨습니다.`,
         });
-        
+
         done();
       });
       roomSocket2 = io(
