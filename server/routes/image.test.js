@@ -107,7 +107,7 @@ describe("GET /api/v1/images/:roomId", () => {
     expect(getResponse.body).toEqual(fs.readFileSync(imagePath));
   });
   test("존재하지 않은 이미지", async () => {
-    const getResponse = await agent.get("/api/v1/images/abc123");
+    const getResponse = await agent.get("/api/v1/images/abc12345");
     expect(getResponse.body).toEqual({
       status: 500,
       message: "이미지를 가져오는데 실패했습니다.",

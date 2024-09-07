@@ -51,7 +51,7 @@ export const uploadPoseObject = async (req, res) => {
 
     // 존재한다면 객체를 가져와서 type에 맞게 세팅.
     else {
-      const roomObjectString = await redisClient.get(roomId);
+      const roomObjectString = await redisClient.get(roomId.toString());
 
       const roomObject = JSON.parse(roomObjectString);
       if (type === "ATTACK") {
@@ -60,7 +60,7 @@ export const uploadPoseObject = async (req, res) => {
         roomObject.defense = poseObject;
       }
       // 객체를 다시 저장
-      await redisClient.set(roomId, JSON.stringify(roomObject));
+      await redisClient.set(roomId.toString(), JSON.stringify(roomObject));
     }
     res.status(201).send({
       status: 201,
@@ -110,7 +110,7 @@ export const getImage = async (req, res) => {
 };
 export const getPoseObject = async (req, res) => {
   const roomId = req.params.roomId;
-  
+
   try {
     // JSON parse해서 attack 정보만 가져옴.
     // defense는 가져올 필요 없음.
@@ -121,17 +121,16 @@ export const getPoseObject = async (req, res) => {
     if (!object) {
       return res.status(404).send({
         status: 404,
-        message: "이미지를 찾을 수 없습니다."
+        message: "이미지를 찾을 수 없습니다.",
       });
     }
     return res.status(200).send({
       status: 200,
       res: {
         attack: objectJSON.attack,
-        defense: objectJSON.defense
-      }
+        defense: objectJSON.defense,
+      },
     });
-
   } catch (err) {
     console.error(err);
     res.status(500).send({
