@@ -2,8 +2,9 @@ import app from "../server.js";
 import request from "supertest";
 import dirname from "./dirname.cjs";
 import path from "path";
-import { connectDB, disconnectDB, initDB } from "../schemas/index.js";
+import { connectTestDB, disconnectTestDB, initDB } from "../schemas/index.js";
 import dotenv from "../config/dotenv/index.js";
+import { MongoMemoryServer } from "mongodb-memory-server";
 
 const { __dirname } = dirname;
 
@@ -11,8 +12,10 @@ const fs = require("fs");
 
 describe("POST /api/v1/images/", () => {
   const agent = request.agent(app);
+  let mongoServer;
   beforeAll(async () => {
-    await connectDB();
+    mongoServer = await MongoMemoryServer.create();
+    await connectTestDB(mongoServer);
     await initDB();
     dotenv();
     const joinResponse = await agent
@@ -36,7 +39,7 @@ describe("POST /api/v1/images/", () => {
     });
   });
   afterAll(async () => {
-    await disconnectDB();
+    await disconnectTestDB(mongoServer);
   });
   test("이미지 업로드 성공", async () => {
     // const response = await agent.post("/api/v1/images/").attach("file", image).send({
@@ -58,8 +61,10 @@ describe("POST /api/v1/images/", () => {
 
 describe("GET /api/v1/images/:roomId", () => {
   const agent = request.agent(app);
+  let mongoServer;
   beforeAll(async () => {
-    await connectDB();
+    mongoServer = await MongoMemoryServer.create();
+    await connectTestDB(mongoServer);
     await initDB();
     dotenv();
     const joinResponse = await agent
@@ -83,7 +88,7 @@ describe("GET /api/v1/images/:roomId", () => {
     });
   });
   afterAll(async () => {
-    await disconnectDB();
+    await disconnectTestDB(mongoServer);
   });
   test("이미지 업로드 후 가져오기 성공", async () => {
     const imagePath = path.join(
@@ -116,6 +121,7 @@ describe("GET /api/v1/images/:roomId", () => {
 });
 
 describe("GET /api/v1/images/poses/:roomId", () => {
+  let mongoServer;
   const poseObject = {
     score: 0.4886581509867135,
     keypoints: [
@@ -259,7 +265,8 @@ describe("GET /api/v1/images/poses/:roomId", () => {
   };
   const agent = request.agent(app);
   beforeAll(async () => {
-    await connectDB();
+    mongoServer = await MongoMemoryServer.create();
+    await connectTestDB(mongoServer);
     await initDB();
     dotenv();
     const joinResponse = await agent
@@ -283,7 +290,7 @@ describe("GET /api/v1/images/poses/:roomId", () => {
     });
   });
   afterAll(async () => {
-    await disconnectDB();
+    await disconnectTestDB(mongoServer);
   });
   test("포즈 객체 업로드 후 가져오기 성공", async () => {
     const response = await agent.post("/api/v1/images/poses").send({

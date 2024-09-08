@@ -1,16 +1,19 @@
 import app from "../server.js";
 import request from "supertest";
-import { connectDB, disconnectDB, initDB } from "../schemas/index.js";
+import { connectTestDB, disconnectTestDB, initDB } from "../schemas/index.js";
 import dotenv from "../config/dotenv/index.js";
+import { MongoMemoryServer } from "mongodb-memory-server";
 
 describe("POST /api/v1/users/join", () => {
+  let mongoServer;
   beforeAll(async () => {
-    await connectDB();
+    mongoServer = await MongoMemoryServer.create();
+    await connectTestDB(mongoServer);
     await initDB();
     dotenv();
   });
   afterAll(async () => {
-    await disconnectDB();
+    await disconnectTestDB(mongoServer);
   });
   test("회원가입 성공, 이름 중복 테스트", async () => {
     // 회원가입 성공
@@ -38,13 +41,15 @@ describe("POST /api/v1/users/join", () => {
 });
 
 describe("POST /api/v1/users/login", () => {
+  let mongoServer;
   beforeAll(async () => {
-    await connectDB();
+    mongoServer = await MongoMemoryServer.create();
+    await connectTestDB(mongoServer);
     await initDB();
     dotenv();
   });
   afterAll(async () => {
-    await disconnectDB();
+    await disconnectTestDB(mongoServer);
   });
   afterEach(async () => {
     await initDB();
@@ -131,13 +136,15 @@ describe("POST /api/v1/users/login", () => {
 });
 
 describe("GET /api/v1/users/myself", () => {
+  let mongoServer;
   beforeAll(async () => {
-    await connectDB();
+    mongoServer = await MongoMemoryServer.create();
+    await connectTestDB(mongoServer);
     await initDB();
     dotenv();
   });
   afterAll(async () => {
-    await disconnectDB();
+    await disconnectTestDB(mongoServer);
   });
 
   test("내 정보 가져오기 테스트", async () => {

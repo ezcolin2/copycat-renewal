@@ -3,16 +3,19 @@ import app from "../server.js";
 import { io } from "socket.io-client";
 import request from "supertest";
 import mongoose from "mongoose";
-import { connectDB, disconnectDB, initDB } from "../schemas/index.js";
+import { connectTestDB, disconnectTestDB, initDB } from "../schemas/index.js";
 import dotenv from "../config/dotenv/index.js";
+import { MongoMemoryServer } from "mongodb-memory-server";
 
 describe("소켓 연결 테스트", () => {
   let loginResponse;
   let server;
   let clientSocket;
   const port = 8000;
+  let mongoServer;
   beforeAll(async () => {
-    await connectDB();
+    mongoServer = await MongoMemoryServer.create();
+    await connectTestDB(mongoServer);
     await initDB();
     dotenv();
     server = app.listen(port, () => {
@@ -42,7 +45,7 @@ describe("소켓 연결 테스트", () => {
 
   afterAll(async () => {
     // server.close();
-    await disconnectDB();
+    await disconnectTestDB(mongoServer);
   });
 
   afterEach(() => {
@@ -91,10 +94,13 @@ describe("소켓 채팅방 테스트", () => {
   let server;
   let clientSocket;
   let newClientSocket;
+  let mongoServer;
+
   const port = 8001;
   // 시작하기 전에 로그인, 세션 접속
   beforeAll(async () => {
-    await connectDB();
+    mongoServer = await MongoMemoryServer.create();
+    await connectTestDB(mongoServer);
     await initDB();
     dotenv();
     server = app.listen(port, () => {
@@ -153,7 +159,7 @@ describe("소켓 채팅방 테스트", () => {
     // newClientSocket.disconnect();
     // clientSocket.disconnect();
     // server.close();
-    await disconnectDB();
+    await disconnectTestDB(mongoServer);
   });
 
   test("채팅방 생성, 삭제 성공", (done) => {
@@ -231,10 +237,12 @@ describe("채팅방 참여 테스트", () => {
   let room;
   let roomSocket1;
   let roomSocket2;
+  let mongoServer;
   const port = 8002;
   // 시작하기 전에 로그인, 세션 접속
   beforeAll(async () => {
-    await connectDB();
+    mongoServer = await MongoMemoryServer.create();
+    await connectTestDB(mongoServer);
     await initDB();
     dotenv();
     server = app.listen(port, () => {
@@ -297,7 +305,7 @@ describe("채팅방 참여 테스트", () => {
     // roomSocket2.disconnect();
     // clientSocket.disconnect();
     // server.close();
-    await disconnectDB();
+    await disconnectTestDB(mongoServer);
   });
   test("채팅방 접속 성공", (done) => {
     // 접속

@@ -83,7 +83,6 @@ export const getImage = async (req, res) => {
     // const exists = await redisClient.exists(roomId);
 
     const imgObjectString = await redisClient.get(roomId);
-    console.log(imgObjectString);
     const imgObject = JSON.parse(imgObjectString);
     const imgBase64 = imgObject.image;
     if (!imgBase64) {
